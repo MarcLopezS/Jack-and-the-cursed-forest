@@ -4,18 +4,29 @@
 #include "World.h"
 
 World::World()
-	: m_ptrCurrentRoom(nullptr)
 {
 	SetupRooms();
+	
+	m_end = false;
 }
 
 World::~World()
 {
-
+	 m_rooms.clear();
 }
 
 void World::Run()
 {
+	std::string userInput;
+
+	while(!m_end)
+	{
+		m_ptrCurrentRoom->PrintPropertiesRoom();
+
+		std::cout << "what are you going to do now?" << std::endl;
+		std::getline(std::cin, userInput);
+		m_end = true;
+	}
 	
 }
 
@@ -24,43 +35,41 @@ void World::SetupRooms()
 	const size_t nRooms = 22;
 
 	Room* rooms = new Room[nRooms];
-	//Room room;
+	
+	rooms[village].SetupDetailsRoom("Village", "The village where you have been living your entire life");
+	m_ptrCurrentRoom = &rooms[village];
 
-	//room = new Room[];
-	/*room.SetupRoom("Village", "The village where you have lived your entire life");
-	m_rooms.push_back(&room);
-	*/
-	rooms[village].SetupRoom("Village", "The village where you have lived your entire life");
-	rooms[forest_entrance].SetupRoom("Forest Entrance", "description");
-	rooms[forest_greatTree].SetupRoom("Forest Great Tree", "description");
-	rooms[river].SetupRoom("River", "description");
-	rooms[water_Altar].SetupRoom("Water Altar", "description");
-	rooms[spine_territory_1].SetupRoom("Spine territory zone 1", "description");
-	rooms[spine_territory_2].SetupRoom("Spine territory zone 2", "description");
-	rooms[spine_territory_3].SetupRoom("Spine territory zone 3", "description");
-	rooms[spine_territory_4].SetupRoom("Spine territory zone 4", "description");
-	rooms[spine_territory_5].SetupRoom("Spine territory zone 5", "description");
-	rooms[spine_territory_6].SetupRoom("Spine territory zone 6", "description");
-	rooms[spine_territory_7].SetupRoom("Spine territory zone 7", "description");
-	rooms[spine_territory_8].SetupRoom("Spine territory zone 8", "description");
-	rooms[spine_territory_9].SetupRoom("Spine territory zone 9", "description");
-	rooms[spine_territory_10].SetupRoom("Spine territory zone 10", "description");
-	rooms[life_altar].SetupRoom("Life Altar", "description");
-	rooms[mossy_forest].SetupRoom("Mossy Forest", "description");
-	rooms[cave_entrance].SetupRoom("Cave entrance", "description");
-	rooms[mine].SetupRoom("Mine", "description");
-	rooms[mineral_room].SetupRoom("Mineral Room", "description");
-	rooms[warehouse].SetupRoom("Warehouse", "description");
-	rooms[earth_altar].SetupRoom("Earth altar", "description");
+	rooms[forest_entrance].SetupDetailsRoom("Forest Entrance", "description");
+	rooms[forest_greatTree].SetupDetailsRoom("Forest Great Tree", "description");
+	rooms[river].SetupDetailsRoom("River", "description");
+	rooms[water_Altar].SetupDetailsRoom("Water Altar", "description");
+	rooms[spine_territory_1].SetupDetailsRoom("Spine territory zone 1", "description");
+	rooms[spine_territory_2].SetupDetailsRoom("Spine territory zone 2", "description");
+	rooms[spine_territory_3].SetupDetailsRoom("Spine territory zone 3", "description");
+	rooms[spine_territory_4].SetupDetailsRoom("Spine territory zone 4", "description");
+	rooms[spine_territory_5].SetupDetailsRoom("Spine territory zone 5", "description");
+	rooms[spine_territory_6].SetupDetailsRoom("Spine territory zone 6", "description");
+	rooms[spine_territory_7].SetupDetailsRoom("Spine territory zone 7", "description");
+	rooms[spine_territory_8].SetupDetailsRoom("Spine territory zone 8", "description");
+	rooms[spine_territory_9].SetupDetailsRoom("Spine territory zone 9", "description");
+	rooms[spine_territory_10].SetupDetailsRoom("Spine territory zone 10", "description");
+	rooms[life_altar].SetupDetailsRoom("Life Altar", "description");
+	rooms[mossy_forest].SetupDetailsRoom("Mossy Forest", "description");
+	rooms[cave_entrance].SetupDetailsRoom("Cave entrance", "description");
+	rooms[mine].SetupDetailsRoom("Mine", "description");
+	rooms[mineral_room].SetupDetailsRoom("Mineral Room", "description");
+	rooms[warehouse].SetupDetailsRoom("Warehouse", "description");
+	rooms[earth_altar].SetupDetailsRoom("Earth altar", "description");
+
+	SetupNeighbors(rooms);
 
 	for (size_t i = 0; i < nRooms; i++)
 	{
 		m_rooms.push_back(&rooms[i]);
-
-		m_rooms.back()->PrintPropertiesRoom();
 	}
 	
-	
+	rooms = nullptr;
+
 	delete[] rooms;
 
 }

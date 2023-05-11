@@ -24,7 +24,7 @@ private:
 	const int m_n_rooms = 16;
 	Room* m_ptrCurrentRoom;
 	std::vector<Room*> m_rooms;
-	Room* romarray[16];
+	bool m_end;
 
 };
 

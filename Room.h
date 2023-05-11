@@ -38,6 +38,7 @@ public:
 	~Room();
 	
 	void SetupRoom(const std::string& name = std::string(), const std::string& description = std::string());
+	void SetupDetailsRoom(const std::string& name = std::string(), const std::string& description = std::string());
 	void SetNeighbors(Room* neighborNorth, Room* neighborSouth, Room* neighborEast, Room* neighborWest);
 	void OutputNeighbors();
 
