@@ -52,6 +52,19 @@ void Room::OutputNeighbors()
 	std::cout << std::endl;
 }
 
+bool Room::checkDirection(const std::string& direction) 
+{
+	if ((direction.compare("north") == 0 && ptrNeighbourNorth != nullptr)||
+		(direction.compare("south") == 0 && ptrNeighbourSouth != nullptr) ||
+		(direction.compare("east") == 0 && ptrNeighbourEast != nullptr) ||
+		(direction.compare("west") == 0 && ptrNeighbourWest != nullptr ))
+	{
+		return true;
+	}else{
+		return false;
+	}
+}
+
 void Room::PrintPropertiesRoom() 
 {
 	std::cout << "----------------------------------- " << std::endl

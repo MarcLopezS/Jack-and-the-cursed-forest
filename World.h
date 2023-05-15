@@ -14,8 +14,9 @@ public:
 	~World();
 
 	void Run();
-
+	void HandleUserInput(const std::vector<std::string>& userInput);
 	
+
 
 private:
 
@@ -24,7 +25,8 @@ private:
 	const int m_n_rooms = 16;
 	Room* m_ptrCurrentRoom;
 	std::vector<Room*> m_rooms;
-	bool m_end;
+	
+	bool m_gameOver;
 
 };
 

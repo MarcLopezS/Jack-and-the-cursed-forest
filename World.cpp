@@ -7,7 +7,7 @@ World::World()
 {
 	SetupRooms();
 	
-	m_end = false;
+	m_gameOver = false;
 }
 
 World::~World()
@@ -17,15 +17,15 @@ World::~World()
 
 void World::Run()
 {
-	std::string userInput;
+	std::vector<std::string> userInput;
 
-	while(!m_end)
+	while(!m_gameOver)
 	{
 		m_ptrCurrentRoom->PrintPropertiesRoom();
 
 		std::cout << "what are you going to do now?" << std::endl;
-		std::getline(std::cin, userInput);
-		m_end = true;
+		std::getline(std::cin, userInput[0]);
+		m_gameOver = true;
 	}
 	
 }
@@ -98,4 +98,9 @@ void World::SetupNeighbors(Room* rooms)
 	rooms[mineral_room].SetNeighbors(&rooms[mine], nullptr, nullptr, nullptr);
 	rooms[warehouse].SetNeighbors(nullptr, &rooms[mine], nullptr, nullptr);
 	rooms[earth_altar].SetNeighbors(nullptr, nullptr, nullptr, &rooms[mine]);
+}
+
+void World::HandleUserInput(const std::vector<std::string>& userInput)
+{
+
 }

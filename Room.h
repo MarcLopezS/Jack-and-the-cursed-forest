@@ -42,6 +42,8 @@ public:
 	void SetNeighbors(Room* neighborNorth, Room* neighborSouth, Room* neighborEast, Room* neighborWest);
 	void OutputNeighbors();
 
+	bool checkDirection(const std::string& direction);
+
 	void PrintPropertiesRoom();
 
 
