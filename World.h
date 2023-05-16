@@ -6,6 +6,33 @@
 
 #include "Room.h"
 
+struct actions_command
+{
+	std::string LOOK_1 = "look";
+	std::string LOOK_2 = "l";
+	std::string GO = "go";
+	std::string TAKE_1= "take";
+	std::string TAKE_2= "pick";
+	std::string DROP_1 = "drop";
+	std::string DROP_3 = "put";
+	std::string EQUIP_1 = "equip";
+	std::string EQUIP_2 = "eq";
+	std::string UNEQUIP_1 = "unequip";
+	std::string UNEQUIP_2 = "uneq";
+	std::string EXAMINE_1 = "examine";
+	std::string EXAMINE_2 = "ex";
+	std::string ATTACK_1 = "attack";
+	std::string ATTACK_2 = "at";
+	std::string LOOT_1 = "loot";
+	std::string LOOT_2 = "lt";
+	std::string INVENTORY_1 = "inventory";
+	std::string INVENTORY_2 = "i";
+	std::string STATS_1 = "stats";
+	std::string STATS_2 = "st";
+	std::string HELP_1 = "help";
+	std::string HELP_2 = "h";
+
+};
 
 class World
 {

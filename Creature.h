@@ -2,6 +2,7 @@
 #define Creature_h
 
 #include<string>
+#include <vector>
 
 enum CreatureType
 {

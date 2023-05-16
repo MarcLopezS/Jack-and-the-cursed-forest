@@ -2,6 +2,7 @@
 #include <string>
 
 #include "World.h"
+#include "Global.h"
 
 World::World()
 {
@@ -17,14 +18,21 @@ World::~World()
 
 void World::Run()
 {
-	std::vector<std::string> userInput;
+	std::vector<std::string> commands;
+	std::string input;
 
 	while(!m_gameOver)
 	{
 		m_ptrCurrentRoom->PrintPropertiesRoom();
 
 		std::cout << "what are you going to do now?" << std::endl;
-		std::getline(std::cin, userInput[0]);
+		
+		//Get user input
+		std::getline(std::cin, input);
+		
+		//Split input into separate words
+		commands = tokenize(input);
+		
 		m_gameOver = true;
 	}
 	
