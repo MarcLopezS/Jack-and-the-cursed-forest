@@ -6,6 +6,8 @@
 
 World::World()
 {
+	player = new Player();
+
 	SetupRooms();
 	
 	m_gameOver = false;
@@ -18,22 +20,24 @@ World::~World()
 
 void World::Run()
 {
-	std::vector<std::string> commands;
+	std::vector<std::string> userCommands;
 	std::string input;
+
+	m_ptrCurrentRoom->PrintPropertiesRoom();
 
 	while(!m_gameOver)
 	{
-		m_ptrCurrentRoom->PrintPropertiesRoom();
-
-		std::cout << "what are you going to do now?" << std::endl;
+		std::cout << std::endl << "What are you going to do now?" << std::endl;
 		
 		//Get user input
 		std::getline(std::cin, input);
 		
 		//Split input into separate words
-		commands = tokenize(input);
+		userCommands = tokenize(input);
+
+		HandleUserInput(userCommands);
 		
-		m_gameOver = true;
+		//GameOver();
 	}
 	
 }
@@ -110,5 +114,58 @@ void World::SetupNeighbors(Room* rooms)
 
 void World::HandleUserInput(const std::vector<std::string>& userInput)
 {
+	std::string userCommand = toLowerCase(userInput.at(0));
+	std::string userParameter = userInput.size() > 1 ? toLowerCase(userInput.at(1)) : "";
 
+	if (m_commands.GO == userCommand)
+	{
+		player->Go(userParameter);
+	}
+	else if (m_commands.LOOK_1 == userCommand || m_commands.LOOK_2 == userCommand)
+	{
+		player->Look(userParameter);
+	}
+	else if (m_commands.HELP_1 == userCommand || m_commands.HELP_2 == userCommand)
+	{
+		HelpCommand();
+	}
+	else if (m_commands.QUIT_1 == userCommand || m_commands.QUIT_2 == userCommand)
+	{
+		GameOver();
+	}
+	else
+		std::cout << "Invalid or wrong usage command. Please try again." << std::endl;
+}
+
+void World::HelpCommand() const
+{
+	std::cout << "\nHere's the list of commands you can use:" << std::endl;
+
+	std::cout << toUpperCase(m_commands.GO) << "\t\t Command whose usage is to move through the map. You need to specify a direction. Values: GO (N)ORTH, (S)OUTH, (E)AST, (W)EST." << std::endl;
+	std::cout << toUpperCase(m_commands.LOOK_1) << " / " << toUpperCase(m_commands.LOOK_2)
+		<< "\t Command whose usage is to describe the item you specify (if you have it on the inventory or exists in the room)." << std::endl;
+	std::cout << toUpperCase(m_commands.TAKE_1) << " / " << toUpperCase(m_commands.TAKE_2)
+		<< "\t Command whose usage is to take/grab an item and put it in your inventory." << std::endl;
+	std::cout << toUpperCase(m_commands.DROP_1) << " / " << toUpperCase(m_commands.DROP_2)
+		<< "\t Command whose usage is to drop the item you specify from the inventory and leave it on the current room." << std::endl;
+	std::cout << toUpperCase(m_commands.EQUIP_1) << " / " << toUpperCase(m_commands.EQUIP_2)
+		<< "\t Command whose usage is to equip the item you specify (only specific items can be equiped)." << std::endl;
+	std::cout << toUpperCase(m_commands.UNEQUIP_1) << " / " << toUpperCase(m_commands.UNEQUIP_2)
+		<< "\t Command whose usage is to unequip the item you specify (only if you have it equiped)." << std::endl;
+	std::cout << toUpperCase(m_commands.ATTACK_1) << " / " << toUpperCase(m_commands.ATTACK_2)
+		<< "\t Command whose usage is to attack an enemy." << std::endl;
+	std::cout << toUpperCase(m_commands.LOOT_1) << " / " << toUpperCase(m_commands.LOOT_2)
+		<< "\t Command whose usage is to put all the items into your inventory." << std::endl;
+	std::cout << toUpperCase(m_commands.INVENTORY_1) << " / " << toUpperCase(m_commands.INVENTORY_2)
+		<< "\t Command whose usage is to show all items inside the inventory." << std::endl;
+	std::cout << toUpperCase(m_commands.STATS_1) << " / " << toUpperCase(m_commands.STATS_2)
+		<< "\t Command whose usage is to show the stats of Jack and equiped items." << std::endl;
+	std::cout << toUpperCase(m_commands.QUIT_1) << " / " << toUpperCase(m_commands.QUIT_2)
+		<< "\t Command whose usage is to close the game." << std::endl;
+
+}
+
+void World::GameOver()
+{
+	m_gameOver = true;
 }

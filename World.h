@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "Room.h"
+#include "Player.h"
 
 struct actions_command
 {
@@ -14,7 +15,7 @@ struct actions_command
 	std::string TAKE_1= "take";
 	std::string TAKE_2= "pick";
 	std::string DROP_1 = "drop";
-	std::string DROP_3 = "put";
+	std::string DROP_2 = "put";
 	std::string EQUIP_1 = "equip";
 	std::string EQUIP_2 = "eq";
 	std::string UNEQUIP_1 = "unequip";
@@ -31,6 +32,8 @@ struct actions_command
 	std::string STATS_2 = "st";
 	std::string HELP_1 = "help";
 	std::string HELP_2 = "h";
+	std::string QUIT_1 = "quit";
+	std::string QUIT_2 = "q";
 
 };
 
@@ -42,18 +45,27 @@ public:
 
 	void Run();
 	void HandleUserInput(const std::vector<std::string>& userInput);
-	
+	void HelpCommand() const;
+	void GameOver();
 
+	Player* player;
 
 private:
 
 	void SetupRooms();
 	void SetupNeighbors(Room* rooms);
+	
 	const int m_n_rooms = 16;
+	
 	Room* m_ptrCurrentRoom;
+	
 	std::vector<Room*> m_rooms;
 	
+	const actions_command m_commands;
+	
 	bool m_gameOver;
+
+	
 
 };
 
