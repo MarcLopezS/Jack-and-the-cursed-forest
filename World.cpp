@@ -125,6 +125,38 @@ void World::HandleUserInput(const std::vector<std::string>& userInput)
 	{
 		player->Look(userParameter);
 	}
+	else if (m_commands.TAKE_1 == userCommand || m_commands.TAKE_2 == userCommand) 
+	{
+		player->Take(userCommand);
+	}
+	else if (m_commands.DROP_1 == userCommand || m_commands.DROP_2 == userCommand) 
+	{
+		player->Drop(userCommand);
+	}
+	else if (m_commands.INVENTORY_1 == userCommand || m_commands.INVENTORY_2 == userCommand) 
+	{
+		player->Inventory();
+	}
+	else if (m_commands.EQUIP_1 == userCommand || m_commands.EQUIP_2 == userCommand) 
+	{
+		player->Equip(userCommand);
+	}
+	else if (m_commands.UNEQUIP_1 == userCommand || m_commands.UNEQUIP_2 == userCommand)
+	{
+		player->UnEquip(userCommand);
+	}
+	else if (m_commands.EXAMINE_1 == userCommand || m_commands.EXAMINE_2 == userCommand)
+	{
+		player->Examine(userCommand);
+	}
+	else if (m_commands.ATTACK_1 == userCommand || m_commands.ATTACK_2 == userCommand)
+	{
+		player->Attack(userCommand);
+	}
+	else if (m_commands.LOOT_1 == userCommand || m_commands.LOOT_2 == userCommand)
+	{
+		player->Loot(userCommand);
+	}
 	else if (m_commands.HELP_1 == userCommand || m_commands.HELP_2 == userCommand)
 	{
 		HelpCommand();

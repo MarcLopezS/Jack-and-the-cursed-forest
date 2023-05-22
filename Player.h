@@ -2,6 +2,7 @@
 #define Player_h
 
 #include "Creature.h"
+#include "Item.h"
 
 class Player : Creature
 {
@@ -19,11 +20,13 @@ public:
 	void Examine(const std::string& userInput) const;
 	void Attack(const std::string& userInput);
 	void Loot(const std::string& userInput);
-	void Exit(const std::string& userInput);
+	//void Exit(const std::string& userInput);
 	
 
 
 private:
+	
+	std::vector<Item> invetory;
 
 };
 

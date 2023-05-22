@@ -52,6 +52,6 @@ void Player::Loot(const std::string& userInput)
 {
 }
 
-void Player::Exit(const std::string& userInput)
+/*void Player::Exit(const std::string& userInput)
 {
-}
+}*/

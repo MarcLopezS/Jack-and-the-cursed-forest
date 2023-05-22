@@ -6,22 +6,29 @@
 enum ItemType
 {
 	COMMON = 0,
-	WEAPON
+	WEAPON,
+	KEY_ITEM
 };
 
 class Item
 {
 public:
-	Item();
+	Item(const std::string& name, const std::string& description, ItemType itemType, bool isCombinable);
 	~Item();
 
 	void PrintDetails();
+	void CombineItems(Item combinableItem, const std::string& newName, const std::string& newDescription);
 
+	
 	ItemType itemGameType;
+	
 	std::string name;
 	std::string description;
+	
+	bool isCombinable;
 
 private:
+
 
 };
 
