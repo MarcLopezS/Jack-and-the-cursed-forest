@@ -4,7 +4,7 @@
 #include<string>
 #include <vector>
 
-enum CreatureType
+enum class CreatureType
 {
 	PLAYER,
 	ENEMY,
@@ -14,9 +14,11 @@ enum CreatureType
 class Creature
 {
 public:
-	Creature();
+	
 	Creature(const std::string& name, const std::string& description, CreatureType creature_type);
 	~Creature();
+
+	void SetHealth();
 
 	int health_points;
 	std::string name;

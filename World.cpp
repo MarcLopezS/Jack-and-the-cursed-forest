@@ -6,7 +6,7 @@
 
 World::World()
 {
-	player = new Player();
+	player = new Player("Jack", "A villager whose dream is looking for some adventures.",CreatureType::PLAYER);
 
 	SetupRooms();
 	
@@ -31,6 +31,7 @@ void World::Run()
 		
 		//Get user input
 		std::getline(std::cin, input);
+		std::cout << std::endl;
 		
 		//Split input into separate words
 		userCommands = tokenize(input);
@@ -38,6 +39,7 @@ void World::Run()
 		HandleUserInput(userCommands);
 		
 		//GameOver();
+		m_ptrCurrentRoom->PrintPropertiesRoom();
 	}
 	
 }
@@ -119,7 +121,13 @@ void World::HandleUserInput(const std::vector<std::string>& userInput)
 
 	if (m_commands.GO == userCommand)
 	{
-		player->Go(userParameter);
+		bool isGoOK = player->Go(userParameter);
+
+		if (isGoOK)
+			GoDestination(userParameter);
+		else
+			std::cout << "Invalid or wrong usage command. Please try again." << std::endl;
+
 	}
 	else if (m_commands.LOOK_1 == userCommand || m_commands.LOOK_2 == userCommand)
 	{
@@ -200,4 +208,24 @@ void World::HelpCommand() const
 void World::GameOver()
 {
 	m_gameOver = true;
+}
+
+void World::GoDestination(const std::string& direction) 
+{
+	if (direction == "north" || direction == "n")
+	{
+		m_ptrCurrentRoom = m_ptrCurrentRoom->ptrNeighbourNorth;
+	}
+	else if (direction == "south" || direction == "s")
+	{
+		m_ptrCurrentRoom = m_ptrCurrentRoom->ptrNeighbourSouth;
+	}
+	else if (direction == "east" || direction == "e")
+	{
+		m_ptrCurrentRoom = m_ptrCurrentRoom->ptrNeighbourEast;
+	}
+	else if (direction == "west" || direction == "w")
+	{
+		m_ptrCurrentRoom = m_ptrCurrentRoom->ptrNeighbourWest;
+	}
 }

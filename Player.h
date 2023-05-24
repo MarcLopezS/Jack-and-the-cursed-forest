@@ -7,10 +7,10 @@
 class Player : Creature
 {
 public:
-	Player();
+	Player(const std::string& name, const std::string& description, CreatureType creature_type);
 	~Player();
 
-	void Go(const std::string& userInput);
+	bool Go(const std::string& userInput);
 	void Look(const std::string& userInput) const;
 	void Take(const std::string& userInput);
 	void Drop(const std::string& userInput);
@@ -26,7 +26,8 @@ public:
 
 private:
 	
-	std::vector<Item> invetory;
+	std::vector<Item*> inventory;
+	std::vector<Item*> equipedItems;
 
 };
 

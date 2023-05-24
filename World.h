@@ -47,6 +47,7 @@ public:
 	void HandleUserInput(const std::vector<std::string>& userInput);
 	void HelpCommand() const;
 	void GameOver();
+	void GoDestination(const std::string& direction);
 
 	Player* player;
 

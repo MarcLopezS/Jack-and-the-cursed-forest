@@ -3,7 +3,7 @@
 
 #include <string>
 
-enum ItemType
+enum class ItemType
 {
 	COMMON = 0,
 	WEAPON,
