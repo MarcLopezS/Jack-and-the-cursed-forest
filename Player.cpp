@@ -38,7 +38,7 @@ bool Player::Go(const std::string& userInput)
 
 	return inputExist;
 }
-void Player::Look(const std::string& userInput) const
+void Player::Look(const std::string& userInput, Room* currentRoom) const
 {
 }
 

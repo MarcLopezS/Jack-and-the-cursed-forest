@@ -16,10 +16,22 @@ Room::~Room()
 {
 }
 
+void Room::SetupItem(Item item)
+{
+	items_room.push_back(&item);
+}
+
+void Room::SetupItem(std::vector<Item> items)
+{
+	for (auto& element : items)
+	{
+		items_room.push_back(&element);
+	}
+}
 void Room::SetupRoom(const std::string& name, const std::string& description)
 {
-	this->m_name = name;
-	this->m_description = description;
+	this->name = name;
+	this->description = description;
 	ptrNeighbourNorth = nullptr;
 	ptrNeighbourSouth = nullptr;
 	ptrNeighbourEast = nullptr; 
@@ -28,8 +40,8 @@ void Room::SetupRoom(const std::string& name, const std::string& description)
 
 void Room::SetupDetailsRoom(const std::string& name, const std::string& description)
 {
-	this->m_name = name;
-	this->m_description = description;
+	this->name = name;
+	this->description = description;
 }
 
 void Room::SetNeighbors(Room* ptrNorth, Room* ptrSouth, Room* ptrEast, Room* ptrWest )
@@ -68,7 +80,7 @@ bool Room::checkDirection(const std::string& direction)
 void Room::PrintPropertiesRoom() 
 {
 	std::cout << "----------------------------------- " << std::endl
-		<< m_name << std::endl;
-	std::cout << m_description << std::endl
+		<< name << std::endl;
+	std::cout << description << std::endl
 		<< "----------------------------------- " << std::endl;
 }

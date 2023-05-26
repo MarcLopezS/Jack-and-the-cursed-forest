@@ -131,7 +131,7 @@ void World::HandleUserInput(const std::vector<std::string>& userInput)
 	}
 	else if (m_commands.LOOK_1 == userCommand || m_commands.LOOK_2 == userCommand)
 	{
-		player->Look(userParameter);
+		player->Look(userParameter, m_ptrCurrentRoom);
 	}
 	else if (m_commands.TAKE_1 == userCommand || m_commands.TAKE_2 == userCommand) 
 	{
