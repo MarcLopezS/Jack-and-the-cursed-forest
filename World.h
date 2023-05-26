@@ -55,6 +55,7 @@ private:
 
 	void SetupRooms();
 	void SetupNeighbors(Room* rooms);
+	void SetupItems();
 	
 	const int m_n_rooms = 16;
 	

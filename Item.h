@@ -29,6 +29,8 @@ public:
 
 private:
 
+	int m_min_value;
+	int m_max_value;
 
 };
 

@@ -114,6 +114,29 @@ void World::SetupNeighbors(Room* rooms)
 	rooms[earth_altar].SetNeighbors(nullptr, nullptr, nullptr, &rooms[mine]);
 }
 
+void World::SetupItems()
+{
+	Item *potion = new Item("Potion", "A liquid that helps healing wounds.", ItemType::COMMON,false);
+
+	m_rooms[river]->SetupItem(*potion);
+	m_rooms[spine_territory_6]->SetupItem(*potion);
+	m_rooms[spine_territory_9]->SetupItem(*potion);
+	m_rooms[mossy_forest]->SetupItem(*potion);
+	m_rooms[mine]->SetupItem(*potion);
+	
+	Item *key = new Item("Mine key", "A key that has a label that says \"Mine\".", ItemType::KEY_ITEM, false);
+	
+	m_rooms[warehouse]->SetupItem(*key);
+
+	Item* water_gem = new Item("Water gem", "A special gem that, according to the legend, has the power to control water.", ItemType::KEY_ITEM, true);
+	Item* life_gem = new Item("Life gem", "A special gem that, according to the legend, has the power to control life of the living beings.", ItemType::KEY_ITEM, true);
+	Item* earth_gem = new Item("Earth gem", "A special gem that, according to the legend, has the power to control eathrquakes and modify the ecosystem.", ItemType::KEY_ITEM, true);
+
+	m_rooms[water_Altar]->SetupItem(*water_gem);
+	m_rooms[life_altar]->SetupItem(*life_gem);
+	m_rooms[earth_altar]->SetupItem(*earth_gem);
+}
+
 void World::HandleUserInput(const std::vector<std::string>& userInput)
 {
 	std::string userCommand = toLowerCase(userInput.at(0));
