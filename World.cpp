@@ -164,7 +164,7 @@ void World::HandleUserInput(const std::vector<std::string>& userInput)
 	}
 	else if (m_commands.DROP_1 == userCommand || m_commands.DROP_2 == userCommand) 
 	{
-		player->Drop(userParameter);
+		player->Drop(userParameter, m_ptrCurrentRoom);
 	}
 	else if (m_commands.INVENTORY_1 == userCommand || m_commands.INVENTORY_2 == userCommand) 
 	{

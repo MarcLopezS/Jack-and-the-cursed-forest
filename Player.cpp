@@ -58,8 +58,6 @@ void Player::Look(Room* currentRoom) const
 
 void Player::Take(const std::string& userInput, Room* currentRoom)
 {
-	currentRoom->items_room;
-
 	for (unsigned int i = 0; i < currentRoom->items_room.size(); i++)
 	{
 		if (toLowerCase(currentRoom->items_room[i]->name) == toLowerCase(userInput)) {
@@ -70,8 +68,23 @@ void Player::Take(const std::string& userInput, Room* currentRoom)
 	
 }
 
-void Player::Drop(const std::string& userInput)
+void Player::Drop(const std::string& userInput, Room* currentRoom)
 {
+	for (size_t i = 0; i < inventory.size(); i++)
+	{
+		if (toLowerCase(inventory[i]->name) == toLowerCase(userInput))
+		{
+			if (inventory[i]->itemGameType == ItemType::COMMON)
+			{
+				currentRoom->items_room.push_back(inventory[i]);
+				inventory.erase(inventory.begin() + i);
+			}
+			else {
+				std::cout << "You cannot drop any weapons or important items! They are so useful for your adventure!" << std::endl;
+			}
+			
+		}
+	}
 }
 
 

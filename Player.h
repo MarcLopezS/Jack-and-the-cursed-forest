@@ -15,7 +15,7 @@ public:
 	bool Go(const std::string& userInput);
 	void Look(Room* currentRoom) const;
 	void Take(const std::string& userInput, Room* currentRoom);
-	void Drop(const std::string& userInput);
+	void Drop(const std::string& userInput, Room* currentRoom);
 	void Inventory() const;
 	void Equip(const std::string& userInput);
 	void UnEquip(const std::string& userInput);
