@@ -4,6 +4,7 @@
 #include "Creature.h"
 #include "Item.h"
 #include "Room.h"
+#include "Global.h"
 
 class Player : Creature
 {
@@ -12,8 +13,8 @@ public:
 	~Player();
 
 	bool Go(const std::string& userInput);
-	void Look(const std::string& userInput,Room* currentRoom) const;
-	void Take(const std::string& userInput);
+	void Look(Room* currentRoom) const;
+	void Take(const std::string& userInput, Room* currentRoom);
 	void Drop(const std::string& userInput);
 	void Inventory() const;
 	void Equip(const std::string& userInput);

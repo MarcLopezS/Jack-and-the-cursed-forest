@@ -38,12 +38,36 @@ bool Player::Go(const std::string& userInput)
 
 	return inputExist;
 }
-void Player::Look(const std::string& userInput, Room* currentRoom) const
+void Player::Look(Room* currentRoom) const
 {
+	if (currentRoom->items_room.size() != 0)
+	{
+		std::cout << "You have found the following objects: " << std::endl;
+		for (auto& item : currentRoom->items_room)
+		{
+			std::cout << item->name << std::endl;
+		}
+
+	}
+	else {
+		std::cout << "You don't see any objects to be taken nearby." << std::endl;
+	}
+	std::cout << std::endl;
+	currentRoom->OutputNeighbors();
 }
 
-void Player::Take(const std::string& userInput)
+void Player::Take(const std::string& userInput, Room* currentRoom)
 {
+	currentRoom->items_room;
+
+	for (unsigned int i = 0; i < currentRoom->items_room.size(); i++)
+	{
+		if (toLowerCase(currentRoom->items_room[i]->name) == toLowerCase(userInput)) {
+			inventory.push_back(currentRoom->items_room[i]);
+			currentRoom->items_room.erase(currentRoom->items_room.begin() + i);
+		}
+	}
+	
 }
 
 void Player::Drop(const std::string& userInput)

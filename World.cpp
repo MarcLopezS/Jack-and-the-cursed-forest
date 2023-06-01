@@ -9,6 +9,7 @@ World::World()
 	player = new Player("Jack", "A villager whose dream is looking for some adventures.",CreatureType::PLAYER);
 
 	SetupRooms();
+	SetupItems();
 	
 	m_gameOver = false;
 }
@@ -51,7 +52,7 @@ void World::SetupRooms()
 	Room* rooms = new Room[nRooms];
 	
 	rooms[village].SetupDetailsRoom("Village", "The village where you have been living your entire life");
-	m_ptrCurrentRoom = &rooms[village];
+	//m_ptrCurrentRoom = &rooms[village];
 
 	rooms[forest_entrance].SetupDetailsRoom("Forest Entrance", "description");
 	rooms[forest_greatTree].SetupDetailsRoom("Forest Great Tree", "description");
@@ -81,7 +82,8 @@ void World::SetupRooms()
 	{
 		m_rooms.push_back(&rooms[i]);
 	}
-	
+
+	m_ptrCurrentRoom = m_rooms[village];
 	rooms = nullptr;
 
 	delete[] rooms;
@@ -116,25 +118,25 @@ void World::SetupNeighbors(Room* rooms)
 
 void World::SetupItems()
 {
-	Item *potion = new Item("Potion", "A liquid that helps healing wounds.", ItemType::COMMON,false);
+	Item* potion = new Item("Potion", "A liquid that helps healing wounds.", ItemType::COMMON,false);
 
-	m_rooms[river]->SetupItem(*potion);
-	m_rooms[spine_territory_6]->SetupItem(*potion);
-	m_rooms[spine_territory_9]->SetupItem(*potion);
-	m_rooms[mossy_forest]->SetupItem(*potion);
-	m_rooms[mine]->SetupItem(*potion);
+	m_rooms[river]->SetupItem(potion);
+	m_rooms[spine_territory_6]->SetupItem(potion);
+	m_rooms[spine_territory_9]->SetupItem(potion);
+	m_rooms[mossy_forest]->SetupItem(potion);
+	m_rooms[mine]->SetupItem(potion);
 	
-	Item *key = new Item("Mine key", "A key that has a label that says \"Mine\".", ItemType::KEY_ITEM, false);
+	Item* key = new Item("Mine key", "A key that has a label that says \"Mine\".", ItemType::KEY_ITEM, false);
 	
-	m_rooms[warehouse]->SetupItem(*key);
+	m_rooms[warehouse]->SetupItem(key);
 
 	Item* water_gem = new Item("Water gem", "A special gem that, according to the legend, has the power to control water.", ItemType::KEY_ITEM, true);
 	Item* life_gem = new Item("Life gem", "A special gem that, according to the legend, has the power to control life of the living beings.", ItemType::KEY_ITEM, true);
 	Item* earth_gem = new Item("Earth gem", "A special gem that, according to the legend, has the power to control eathrquakes and modify the ecosystem.", ItemType::KEY_ITEM, true);
 
-	m_rooms[water_Altar]->SetupItem(*water_gem);
-	m_rooms[life_altar]->SetupItem(*life_gem);
-	m_rooms[earth_altar]->SetupItem(*earth_gem);
+	m_rooms[water_Altar]->SetupItem(water_gem);
+	m_rooms[life_altar]->SetupItem(life_gem);
+	m_rooms[earth_altar]->SetupItem(earth_gem);
 }
 
 void World::HandleUserInput(const std::vector<std::string>& userInput)
@@ -154,15 +156,15 @@ void World::HandleUserInput(const std::vector<std::string>& userInput)
 	}
 	else if (m_commands.LOOK_1 == userCommand || m_commands.LOOK_2 == userCommand)
 	{
-		player->Look(userParameter, m_ptrCurrentRoom);
+		player->Look(m_ptrCurrentRoom);
 	}
 	else if (m_commands.TAKE_1 == userCommand || m_commands.TAKE_2 == userCommand) 
 	{
-		player->Take(userCommand);
+		player->Take(userParameter,m_ptrCurrentRoom);
 	}
 	else if (m_commands.DROP_1 == userCommand || m_commands.DROP_2 == userCommand) 
 	{
-		player->Drop(userCommand);
+		player->Drop(userParameter);
 	}
 	else if (m_commands.INVENTORY_1 == userCommand || m_commands.INVENTORY_2 == userCommand) 
 	{
@@ -170,23 +172,23 @@ void World::HandleUserInput(const std::vector<std::string>& userInput)
 	}
 	else if (m_commands.EQUIP_1 == userCommand || m_commands.EQUIP_2 == userCommand) 
 	{
-		player->Equip(userCommand);
+		player->Equip(userParameter);
 	}
 	else if (m_commands.UNEQUIP_1 == userCommand || m_commands.UNEQUIP_2 == userCommand)
 	{
-		player->UnEquip(userCommand);
+		player->UnEquip(userParameter);
 	}
 	else if (m_commands.EXAMINE_1 == userCommand || m_commands.EXAMINE_2 == userCommand)
 	{
-		player->Examine(userCommand);
+		player->Examine(userParameter);
 	}
 	else if (m_commands.ATTACK_1 == userCommand || m_commands.ATTACK_2 == userCommand)
 	{
-		player->Attack(userCommand);
+		player->Attack(userParameter);
 	}
 	else if (m_commands.LOOT_1 == userCommand || m_commands.LOOT_2 == userCommand)
 	{
-		player->Loot(userCommand);
+		player->Loot(userParameter);
 	}
 	else if (m_commands.HELP_1 == userCommand || m_commands.HELP_2 == userCommand)
 	{
@@ -206,11 +208,13 @@ void World::HelpCommand() const
 
 	std::cout << toUpperCase(m_commands.GO) << "\t\t Command whose usage is to move through the map. You need to specify a direction. Values: GO (N)ORTH, (S)OUTH, (E)AST, (W)EST." << std::endl;
 	std::cout << toUpperCase(m_commands.LOOK_1) << " / " << toUpperCase(m_commands.LOOK_2)
-		<< "\t Command whose usage is to describe the item you specify (if you have it on the inventory or exists in the room)." << std::endl;
+		<< "\t Command whose usage is to describe the available paths that you can go." << std::endl;
 	std::cout << toUpperCase(m_commands.TAKE_1) << " / " << toUpperCase(m_commands.TAKE_2)
 		<< "\t Command whose usage is to take/grab an item and put it in your inventory." << std::endl;
 	std::cout << toUpperCase(m_commands.DROP_1) << " / " << toUpperCase(m_commands.DROP_2)
 		<< "\t Command whose usage is to drop the item you specify from the inventory and leave it on the current room." << std::endl;
+	std::cout << toUpperCase(m_commands.EXAMINE_1) << " / " << toUpperCase(m_commands.EXAMINE_2)
+		<< "\t Command whose usage is to describe the item you specify (if you have it on the inventory or exists in the room)." << std::endl;
 	std::cout << toUpperCase(m_commands.EQUIP_1) << " / " << toUpperCase(m_commands.EQUIP_2)
 		<< "\t Command whose usage is to equip the item you specify (only specific items can be equiped)." << std::endl;
 	std::cout << toUpperCase(m_commands.UNEQUIP_1) << " / " << toUpperCase(m_commands.UNEQUIP_2)

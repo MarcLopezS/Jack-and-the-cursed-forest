@@ -16,9 +16,9 @@ Room::~Room()
 {
 }
 
-void Room::SetupItem(Item item)
+void Room::SetupItem(Item* item)
 {
-	items_room.push_back(&item);
+	items_room.push_back(item);
 }
 
 void Room::SetupItem(std::vector<Item> items)
@@ -54,7 +54,7 @@ void Room::SetNeighbors(Room* ptrNorth, Room* ptrSouth, Room* ptrEast, Room* ptr
 
 void Room::OutputNeighbors()
 {
-	std::cout << "You see that you can go: ";
+	std::cout << "You see that you can go in the following directions: ";
 
 	if (ptrNeighbourNorth != nullptr) { std::cout << "North "; }
 	if (ptrNeighbourSouth != nullptr) { std::cout << "South "; }
