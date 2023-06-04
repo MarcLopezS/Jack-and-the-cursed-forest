@@ -18,7 +18,8 @@ public:
 
 	void PrintDetails();
 	void CombineItems(Item combinableItem, const std::string& newName, const std::string& newDescription);
-
+	int GetValueItem();
+	void ClassifyItemValue();
 	
 	ItemType itemGameType;
 	
@@ -29,9 +30,9 @@ public:
 
 private:
 
-	int m_min_value;
-	int m_max_value;
-
+	//int m_min_value;
+	//int m_max_value;
+	int value_item; 
 };
 
 #endif //Item_h

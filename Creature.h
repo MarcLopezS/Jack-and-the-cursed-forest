@@ -18,7 +18,7 @@ public:
 	Creature(const std::string& name, const std::string& description, CreatureType creature_type);
 	~Creature();
 
-	void SetHealth();
+	virtual void SetHealth();
 
 	int health_points;
 	std::string name;

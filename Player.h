@@ -23,6 +23,8 @@ public:
 	void Attack(const std::string& userInput);
 	void Loot(const std::string& userInput);
 	//void Exit(const std::string& userInput);
+
+	void SetHealth() override;
 	
 
 
