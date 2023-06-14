@@ -6,7 +6,7 @@
 #include "Room.h"
 #include "Global.h"
 
-class Player : Creature
+class Player : public Creature
 {
 public:
 	Player(const std::string& name, const std::string& description, CreatureType creature_type);
@@ -25,6 +25,8 @@ public:
 	//void Exit(const std::string& userInput);
 
 	void SetHealth() override;
+
+	std::vector<Item*> GetInventory();
 	
 
 

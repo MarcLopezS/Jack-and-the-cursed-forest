@@ -20,7 +20,7 @@ public:
 	void CombineItems(Item combinableItem, const std::string& newName, const std::string& newDescription);
 	int GetValueItem();
 	void ClassifyItemValue();
-	
+
 	ItemType itemGameType;
 	
 	std::string name;

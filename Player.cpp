@@ -139,3 +139,8 @@ void Player::SetHealth()
 {
 	health_points = 100;
 }
+
+std::vector<Item*> Player::GetInventory()
+{
+	return inventory;
+}
