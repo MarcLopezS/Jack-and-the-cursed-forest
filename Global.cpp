@@ -28,3 +28,8 @@ std::string toUpperCase(std::string str)
 	std::transform(str.begin(), str.end(), str.begin(), ::toupper);
 	return str;
 }
+
+bool compareNames(Item* item, const std::string& str)
+{
+	return toLowerCase(item->name) == str;
+}

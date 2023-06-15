@@ -22,16 +22,20 @@ public:
 	void Examine(const std::string& userInput) const;
 	void Attack(const std::string& userInput);
 	void Loot(const std::string& userInput);
+	void Use(const std::string& userInput);
+	void Status() const;
 	//void Exit(const std::string& userInput);
 
 	void SetHealth() override;
 
 	std::vector<Item*> GetInventory();
+	bool HandleItemInput(const std::string& itemInput);
 	
 
 
 private:
-	
+	const ListItems listItems;
+
 	std::vector<Item*> inventory;
 	std::vector<Item*> equipedItems;
 

@@ -118,7 +118,7 @@ void World::SetupNeighbors(Room* rooms)
 
 void World::SetupItems()
 {
-	Item* potion = new Item("Potion", "A liquid that helps healing wounds.", ItemType::COMMON,false);
+	Item* potion = new Item("Potion", "A liquid that helps healing wounds. Restores 75HP.", ItemType::COMMON,false);
 
 	m_rooms[river]->SetupItem(potion);
 	m_rooms[spine_territory_6]->SetupItem(potion);
@@ -198,6 +198,14 @@ void World::HandleUserInput(const std::vector<std::string>& userInput)
 	{
 		GameOver();
 	}
+	else if (m_commands.USE_1 == userCommand || m_commands.USE_2 == userCommand)
+	{
+		player->Use(userParameter);
+	}
+	else if (m_commands.STATS_1 == userCommand || m_commands.STATS_2 == userCommand)
+	{
+		player->Status();
+	}
 	else
 		std::cout << "Invalid or wrong usage command. Please try again." << std::endl;
 }
@@ -227,6 +235,8 @@ void World::HelpCommand() const
 		<< "\t Command whose usage is to show all items inside the inventory." << std::endl;
 	std::cout << toUpperCase(m_commands.STATS_1) << " / " << toUpperCase(m_commands.STATS_2)
 		<< "\t Command whose usage is to show the stats of Jack and equiped items." << std::endl;
+	std::cout << toUpperCase(m_commands.USE_1) << " / " << toUpperCase(m_commands.USE_2)
+		<< "\t Command whose usage is to use the item you specify that is in your inventory." << std::endl;
 	std::cout << toUpperCase(m_commands.QUIT_1) << " / " << toUpperCase(m_commands.QUIT_2)
 		<< "\t Command whose usage is to close the game." << std::endl;
 

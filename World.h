@@ -34,6 +34,8 @@ struct actions_command
 	std::string HELP_2 = "h";
 	std::string QUIT_1 = "quit";
 	std::string QUIT_2 = "q";
+	std::string USE_1 = "use";
+	std::string USE_2 = "u";
 
 };
 

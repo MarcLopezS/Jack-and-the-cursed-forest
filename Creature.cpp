@@ -6,26 +6,27 @@ Creature::Creature(const std::string& name, const std::string& description, Crea
 {
 	this->name = name;
 	this->description = description;
-	this->creature_type = creature_type;
-	SetHealth();
-	
+	this->creature_type = creature_type;	
 }
 Creature::~Creature()
 {
 }
 
-void Creature::SetHealth() 
+void Creature::SetHealth()
 {
 	switch (creature_type)
 	{
 		case CreatureType::PLAYER:
-			health_points = 100;
+			max_health_points = 100;
+			current_health_points = 20;
 			break;
 		case CreatureType::ENEMY:
-			health_points = 50;
+			max_health_points = 50;
+			current_health_points = 50;
 			break;
 		case CreatureType::BOSS:
-			health_points = 500;
+			max_health_points = 500;
+			current_health_points = 500;
 			break;
 	}
 }

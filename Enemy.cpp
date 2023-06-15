@@ -30,11 +30,13 @@ void Enemy::SetHealth()
 
 	if(creature_type == CreatureType::BOSS)
 	{
-		health_points = 500;
+		max_health_points = 500;
+		current_health_points = 500;
 	}
 	else {
 		//enemies with health between 30-50 points
-		health_points = 30 + (rand() % 21);
+		max_health_points = 30 + (rand() % 21);
+		current_health_points = max_health_points;
 	}
 }
 
@@ -46,7 +48,7 @@ void Enemy::Attack(Creature* player)
 	//random damage with limit +5/-5 to the original value weapon
 	int damage_points = enemy_weapon->GetValueItem() + (rand() % 11) - 5;
 
-	player->health_points -= damage_points;
+	player->current_health_points -= damage_points;
 
 	std::cout << name << " attacked you. You take " << damage_points << " damage points." << std::endl;
 
@@ -54,11 +56,11 @@ void Enemy::Attack(Creature* player)
 
 void Enemy::Damage(Player* player, int damage_points)
 {
-	health_points -= damage_points;
+	current_health_points -= damage_points;
 
 	std::cout << name << " received " << damage_points << " damage points.\n" << std::endl;
 
-	if(health_points <= 0)
+	if(current_health_points <= 0)
 	{
 		Defeat(player);
 	}

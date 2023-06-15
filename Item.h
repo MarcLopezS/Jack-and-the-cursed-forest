@@ -10,6 +10,13 @@ enum class ItemType
 	KEY_ITEM
 };
 
+struct ListItems
+{
+	public:
+		const std::string POTION = "potion";
+		const int POTION_VALUE = 75;
+};
+
 class Item
 {
 public:

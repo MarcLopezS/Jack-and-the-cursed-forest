@@ -20,7 +20,8 @@ public:
 
 	virtual void SetHealth();
 
-	int health_points;
+	int max_health_points;
+	int current_health_points;
 	std::string name;
 	std::string description;
 	CreatureType creature_type;

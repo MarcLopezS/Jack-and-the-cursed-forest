@@ -5,7 +5,7 @@
 Player::Player(const std::string& name, const std::string& description, CreatureType creature_type)
 	: Creature(name, description,creature_type)
 {
-
+	SetHealth();
 }
 
 Player::~Player()
@@ -112,7 +112,7 @@ void Player::Examine(const std::string& userInput) const
 	
 	for (auto& item : inventory)
 	{
-		if (item->name == userInput) 
+		if (toLowerCase(item->name) == userInput) 
 		{
 			item->PrintDetails();
 			itemExist = true;
@@ -135,12 +135,60 @@ void Player::Loot(const std::string& userInput)
 {
 }*/
 
+void Player::Use(const std::string& userInput)
+{
+	auto it = std::find_if(inventory.begin(), inventory.end(), [userInput](Item* item) {
+		return compareNames(item, userInput);
+		});
+	
+	if (it != inventory.end())
+	{
+		//If using item is successful
+		if (HandleItemInput(userInput))
+		{
+			std::cout << "You used a " << (*it)->name << std::endl;
+			inventory.erase(it);
+		}
+	}
+	else {
+		std::cout << "The item you want to use does not exist or is not in your inventory." << std::endl;
+	}
+}
+
+void Player::Status() const
+{
+	std::cout << "HP: " << current_health_points << "/" << max_health_points << std::endl;
+}
+
 void Player::SetHealth()
 {
-	health_points = 100;
+	max_health_points = 100;
+	current_health_points = 100;
 }
 
 std::vector<Item*> Player::GetInventory()
 {
 	return inventory;
+}
+
+/*
+ Handle the item specified and, if the operation was not successful, return false
+*/
+bool Player::HandleItemInput(const std::string& itemInput)
+{
+	if (listItems.POTION == toLowerCase(itemInput))
+	{
+		if (current_health_points != max_health_points) 
+		{
+			current_health_points = (current_health_points + listItems.POTION_VALUE) > max_health_points
+				? max_health_points
+				: current_health_points + listItems.POTION_VALUE;
+
+			return true;
+		}
+		else {
+			std::cout << "I'm completely healthy! It would be a waste to use a " << listItems.POTION << " now." << std::endl;
+		}
+	}
+	return false;
 }
