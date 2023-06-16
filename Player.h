@@ -30,7 +30,7 @@ public:
 
 	std::vector<Item*> GetInventory();
 	bool HandleItemInput(const std::string& itemInput);
-	
+
 
 
 private:

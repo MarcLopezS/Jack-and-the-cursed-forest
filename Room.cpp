@@ -1,6 +1,13 @@
 #include <iostream>
 #include <string>
 #include "Room.h"
+#include "Enemy.h"
+
+
+void Room::SetupEnemy(Enemy* enemy)
+{
+	enemy_room = enemy;
+}
 
 Room::Room()
 {
@@ -10,10 +17,17 @@ Room::Room()
 Room::Room(const std::string& name, const std::string& description)
 {
 	SetupRoom(name, description);
+	enemy_room = nullptr;
 }
 
 Room::~Room()
 {
+	std::vector<Item*>().swap(items_room);//de-allocate the memory taken by the vector
+	delete ptrNeighbourNorth;
+	delete ptrNeighbourSouth;
+	delete ptrNeighbourEast;
+	delete ptrNeighbourWest;
+	delete enemy_room;
 }
 
 void Room::SetupItem(Item* item)
@@ -28,6 +42,7 @@ void Room::SetupItem(std::vector<Item> items)
 		items_room.push_back(&element);
 	}
 }
+
 void Room::SetupRoom(const std::string& name, const std::string& description)
 {
 	this->name = name;

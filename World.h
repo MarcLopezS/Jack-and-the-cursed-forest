@@ -12,8 +12,8 @@ struct actions_command
 	std::string LOOK_1 = "look";
 	std::string LOOK_2 = "l";
 	std::string GO = "go";
-	std::string TAKE_1= "take";
-	std::string TAKE_2= "pick";
+	std::string TAKE_1 = "take";
+	std::string TAKE_2 = "pick";
 	std::string DROP_1 = "drop";
 	std::string DROP_2 = "put";
 	std::string EQUIP_1 = "equip";
@@ -46,8 +46,11 @@ public:
 	~World();
 
 	void Run();
+	void Combat();
 	void HandleUserInput(const std::vector<std::string>& userInput);
+	bool HandleUserInputCombat(const std::vector<std::string>& userInput);
 	void HelpCommand() const;
+	void HelpCombatCommand() const;
 	void GameOver();
 	void GoDestination(const std::string& direction);
 
@@ -58,18 +61,19 @@ private:
 	void SetupRooms();
 	void SetupNeighbors(Room* rooms);
 	void SetupItems();
-	
+	void SetupEnemies();
+
 	const int m_n_rooms = 16;
-	
+
 	Room* m_ptrCurrentRoom;
-	
+
 	std::vector<Room*> m_rooms;
-	
+
 	const actions_command m_commands;
-	
+
 	bool m_gameOver;
 
-	
+
 
 };
 

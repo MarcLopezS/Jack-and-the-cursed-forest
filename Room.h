@@ -3,8 +3,8 @@
 
 #include <string>
 #include <vector>
-
 #include "Item.h"
+class Enemy;
 
 enum locations
 {
@@ -33,6 +33,8 @@ enum locations
 
 };
 
+
+
 class Room
 {
 public:
@@ -40,6 +42,9 @@ public:
 	Room(const std::string& name, const std::string& description);
 	~Room();
 	
+	Enemy* enemy_room;
+
+	void SetupEnemy(Enemy* enemy);
 	void SetupRoom(const std::string& name = std::string(), const std::string& description = std::string());
 	void SetupDetailsRoom(const std::string& name = std::string(), const std::string& description = std::string());
 	void SetupItem(Item* item);
@@ -48,7 +53,6 @@ public:
 	void OutputNeighbors();
 
 	bool checkDirection(const std::string& direction);
-
 	void PrintPropertiesRoom();
 
 
