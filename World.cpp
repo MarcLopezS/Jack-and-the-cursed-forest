@@ -16,7 +16,11 @@ World::World()
 
 World::~World()
 {
-	 m_rooms.clear();
+	std::vector<Room*>().swap(m_rooms);//de-allocate the memory taken by the vector 
+	delete player;
+	delete m_ptrCurrentRoom;
+	 
+
 }
 
 void World::Run()
@@ -38,9 +42,56 @@ void World::Run()
 		userCommands = tokenize(input);
 
 		HandleUserInput(userCommands);
+
+		if (m_ptrCurrentRoom->enemy_room != nullptr)
+		{
+			Combat();
+		}
 		
 		//GameOver();
 		m_ptrCurrentRoom->PrintPropertiesRoom();
+	}
+	
+}
+
+void World::Combat() 
+{
+	std::cout << "You found a " << m_ptrCurrentRoom->enemy_room->name << "!" << std::endl;
+	std::cout << "You change to combat mode." << std::endl;
+
+	bool iscombatFinished = false;
+	bool player_turn = true;
+
+	std::vector<std::string> userCommands;
+	std::string input;
+
+	while (!iscombatFinished)
+	{
+		std::cout << std::endl << "COMBAT\t" << m_ptrCurrentRoom->enemy_room->name << std::endl;
+		std::cout << std::endl << "Jack HP: " << player->current_health_points << "/" << player->max_health_points << std::endl;
+		std::cout << std::endl << "Which combat action are you going to do now?" << std::endl;
+
+		//Get user input
+		std::getline(std::cin, input);
+		std::cout << std::endl;
+
+		//Split input into separate words
+		userCommands = tokenize(input);
+
+		player_turn = HandleUserInputCombat(userCommands);
+
+		if (m_ptrCurrentRoom->enemy_room->current_health_points <= 0)
+		{
+			//DEFEAT AND LOOT
+			iscombatFinished = true;
+		}
+		else if(!player_turn)
+		{
+			//ENEMY ATTACK
+			m_ptrCurrentRoom->enemy_room->Attack(player);
+			player_turn = true;
+		}
+
 	}
 	
 }
@@ -139,6 +190,21 @@ void World::SetupItems()
 	m_rooms[earth_altar]->SetupItem(earth_gem);
 }
 
+void World::SetupEnemies() 
+{
+	Item* fangs = new Item("Fangs", "The fangs of an animal. Very powerful and sharp",ItemType::WEAPON,false);
+	Enemy* wolf = new Enemy("Wolf", "A creature borned in the forest. With their powerful fangs can destroy their enemies.", CreatureType::ENEMY,fangs);
+
+	Enemy* snake = new Enemy("Wolf", "A creature borned in the forest. With their powerful fangs and large body can cause the death of their enemies.", CreatureType::ENEMY, fangs);
+
+	m_rooms[river]->SetupEnemy(snake);
+	m_rooms[spine_territory_3]->SetupEnemy(wolf);
+	m_rooms[spine_territory_5]->SetupEnemy(wolf);
+	m_rooms[spine_territory_7]->SetupEnemy(snake);
+	m_rooms[mineral_room]->SetupEnemy(snake);
+
+}
+
 void World::HandleUserInput(const std::vector<std::string>& userInput)
 {
 	std::string userCommand = toLowerCase(userInput.at(0));
@@ -204,10 +270,62 @@ void World::HandleUserInput(const std::vector<std::string>& userInput)
 	}
 	else if (m_commands.STATS_1 == userCommand || m_commands.STATS_2 == userCommand)
 	{
-		player->Status();
+		player->Stats();
 	}
 	else
 		std::cout << "Invalid or wrong usage command. Please try again." << std::endl;
+}
+
+//returns a boolean to control the turn of the player in combat
+bool World::HandleUserInputCombat(const std::vector<std::string>& userInput)
+{
+	bool player_turn = true;
+	std::string userCommand = toLowerCase(userInput.at(0));
+	std::string userParameter = userInput.size() > 1 ? toLowerCase(userInput.at(1)) : "";
+
+	if (m_commands.GO == userCommand)
+	{
+		std::cout << "You can't go anywhere! Your enemy would not let you escape." << std::endl;
+
+	}
+	else if (m_commands.LOOK_1 == userCommand || m_commands.LOOK_2 == userCommand)
+	{
+		std::cout << "It's not the time to look around! Your enemy is just in front of you." << std::endl;
+	}
+	else if (m_commands.INVENTORY_1 == userCommand || m_commands.INVENTORY_2 == userCommand)
+	{
+		player->Inventory();
+	}
+	else if (m_commands.EXAMINE_1 == userCommand || m_commands.EXAMINE_2 == userCommand)
+	{
+		player->Examine(userParameter);
+	}
+	else if (m_commands.ATTACK_1 == userCommand || m_commands.ATTACK_2 == userCommand)
+	{
+		player->Attack(userParameter);
+		player_turn = false;
+	}
+	else if (m_commands.HELP_1 == userCommand || m_commands.HELP_2 == userCommand)
+	{
+		HelpCombatCommand();
+	}
+	else if (m_commands.QUIT_1 == userCommand || m_commands.QUIT_2 == userCommand)
+	{
+		GameOver();
+	}
+	else if (m_commands.USE_1 == userCommand || m_commands.USE_2 == userCommand)
+	{
+		player->Use(userParameter);
+		player_turn = false;
+	}
+	else if (m_commands.STATS_1 == userCommand || m_commands.STATS_2 == userCommand)
+	{
+		player->Stats();
+	}
+	else
+		std::cout << "Invalid or wrong usage command in combat. Please try again." << std::endl;
+
+	return player_turn;
 }
 
 void World::HelpCommand() const
@@ -240,6 +358,24 @@ void World::HelpCommand() const
 	std::cout << toUpperCase(m_commands.QUIT_1) << " / " << toUpperCase(m_commands.QUIT_2)
 		<< "\t Command whose usage is to close the game." << std::endl;
 
+}
+
+void World::HelpCombatCommand() const
+{
+	std::cout << "\nHere's the list of commands you can use in combat:" << std::endl;
+
+	std::cout << toUpperCase(m_commands.EXAMINE_1) << " / " << toUpperCase(m_commands.EXAMINE_2)
+		<< "\t Command whose usage is to describe the item you specify (if you have it on the inventory)." << std::endl;
+	std::cout << toUpperCase(m_commands.ATTACK_1) << " / " << toUpperCase(m_commands.ATTACK_2)
+		<< "\t Command whose usage is to attack an enemy." << std::endl;
+	std::cout << toUpperCase(m_commands.INVENTORY_1) << " / " << toUpperCase(m_commands.INVENTORY_2)
+		<< "\t Command whose usage is to show all items inside the inventory." << std::endl;
+	std::cout << toUpperCase(m_commands.STATS_1) << " / " << toUpperCase(m_commands.STATS_2)
+		<< "\t Command whose usage is to show the stats of Jack and equiped items." << std::endl;
+	std::cout << toUpperCase(m_commands.USE_1) << " / " << toUpperCase(m_commands.USE_2)
+		<< "\t Command whose usage is to use the item you specify that is in your inventory." << std::endl;
+	std::cout << toUpperCase(m_commands.QUIT_1) << " / " << toUpperCase(m_commands.QUIT_2)
+		<< "\t Command whose usage is to close the game." << std::endl;
 }
 
 void World::GameOver()

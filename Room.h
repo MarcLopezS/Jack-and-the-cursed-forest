@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "Item.h"
+#include "Enemy.h"
 
 enum locations
 {
@@ -46,6 +47,7 @@ public:
 	void SetupItem(std::vector<Item> items);
 	void SetNeighbors(Room* neighborNorth, Room* neighborSouth, Room* neighborEast, Room* neighborWest);
 	void OutputNeighbors();
+	void SetupEnemy(Enemy* enemy);
 
 	bool checkDirection(const std::string& direction);
 
@@ -60,6 +62,9 @@ public:
 	Room* ptrNeighbourWest;
 
 	std::vector<Item*> items_room;
+
+	Enemy* enemy_room;
+
 
 
 };

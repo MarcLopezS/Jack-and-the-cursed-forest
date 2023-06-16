@@ -10,6 +10,8 @@ Player::Player(const std::string& name, const std::string& description, Creature
 
 Player::~Player()
 {
+	std::vector<Item*>().swap(inventory);//de-allocate the memory taken by the vector 
+	std::vector<Item*>().swap(equipedItems);
 }
 
 /*
@@ -155,9 +157,10 @@ void Player::Use(const std::string& userInput)
 	}
 }
 
-void Player::Status() const
+void Player::Stats() const
 {
 	std::cout << "HP: " << current_health_points << "/" << max_health_points << std::endl;
+
 }
 
 void Player::SetHealth()

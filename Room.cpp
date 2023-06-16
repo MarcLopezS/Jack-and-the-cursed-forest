@@ -5,15 +5,24 @@
 Room::Room()
 {
 	SetupRoom();
+	enemy_room = nullptr;
+
 }
 
 Room::Room(const std::string& name, const std::string& description)
 {
 	SetupRoom(name, description);
+	enemy_room = nullptr;
 }
 
 Room::~Room()
 {
+	std::vector<Item*>().swap(items_room);//de-allocate the memory taken by the vector
+	delete ptrNeighbourNorth;
+	delete ptrNeighbourSouth;
+	delete ptrNeighbourEast;
+	delete ptrNeighbourWest;
+	delete enemy_room;
 }
 
 void Room::SetupItem(Item* item)
@@ -62,6 +71,11 @@ void Room::OutputNeighbors()
 	if (ptrNeighbourWest != nullptr) { std::cout << "West "; }
 
 	std::cout << std::endl;
+}
+
+void Room::SetupEnemy(Enemy* enemy)
+{
+	enemy_room = enemy;
 }
 
 bool Room::checkDirection(const std::string& direction) 

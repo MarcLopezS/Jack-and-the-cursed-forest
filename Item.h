@@ -28,7 +28,8 @@ public:
 	int GetValueItem();
 	void ClassifyItemValue();
 
-	ItemType itemGameType;
+	const ItemType itemGameType;
+	const ListItems listItems;
 	
 	std::string name;
 	std::string description;

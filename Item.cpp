@@ -34,7 +34,7 @@ void Item::ClassifyItemValue()
 	switch (itemGameType)
 	{
 	case ItemType::COMMON:
-		value_item = 100;
+		value_item = listItems.POTION_VALUE;
 		break;
 	case ItemType::WEAPON:
 		value_item = 20;

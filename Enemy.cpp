@@ -20,6 +20,7 @@ Enemy::Enemy(const std::string& name, const std::string& description, CreatureTy
 
 Enemy::~Enemy()
 {
+	delete enemy_weapon;
 	delete drop_item;
 }
 

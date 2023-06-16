@@ -46,8 +46,11 @@ public:
 	~World();
 
 	void Run();
+	void Combat();
 	void HandleUserInput(const std::vector<std::string>& userInput);
+	bool HandleUserInputCombat(const std::vector<std::string>& userInput);
 	void HelpCommand() const;
+	void HelpCombatCommand() const;
 	void GameOver();
 	void GoDestination(const std::string& direction);
 
@@ -58,6 +61,7 @@ private:
 	void SetupRooms();
 	void SetupNeighbors(Room* rooms);
 	void SetupItems();
+	void SetupEnemies();
 	
 	const int m_n_rooms = 16;
 	
