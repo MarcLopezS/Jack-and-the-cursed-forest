@@ -6,6 +6,7 @@ Player::Player(const std::string& name, const std::string& description, Creature
 	: Creature(name, description,creature_type)
 {
 	SetHealth();
+	strength = 20;
 }
 
 Player::~Player()
@@ -123,8 +124,23 @@ void Player::Examine(const std::string& userInput) const
 		std::cout << "The item you want to examine does not exist or is not in your inventory." << std::endl;
 }
 
-void Player::Attack(const std::string& userInput)
+void Player::Attack(const std::string& userInput, Enemy* enemy)
 {
+	int damage_weapon = equipedItems.size() == 1 ? equipedItems.front()->GetValueItem() : 0;
+	int critic_rate = 20;
+	int control_probability = rand() % 100 + 1; //to control critic probability
+	
+	int damage_points = ((strength + damage_weapon) + (rand() % 11) - 5);
+		enemy->current_health_points -= damage_points;
+
+	if (control_probability <= critic_rate) //damage x2 if enters
+	{
+			std::cout << "Critic attack! ";
+			damage_points *= 2;
+	}
+
+	enemy->Damage(this, damage_points);
+
 }
 
 void Player::Loot(const std::string& userInput)
@@ -158,6 +174,13 @@ void Player::Use(const std::string& userInput)
 void Player::Status() const
 {
 	std::cout << "HP: " << current_health_points << "/" << max_health_points << std::endl;
+	std::cout << "Strength: " << strength << std::endl;
+	if (equipedItems.size() != 0)
+	{
+		std::cout << "Equiped weapon: " << equipedItems.front()->name;
+		std::cout << "Weapon attack: " << equipedItems.front()->GetValueItem();
+	}
+	std::cout << std::endl;
 }
 
 void Player::SetHealth()
@@ -169,6 +192,11 @@ void Player::SetHealth()
 std::vector<Item*> Player::GetInventory()
 {
 	return inventory;
+}
+
+void Player::LootEnemy(Item* enemy_item)
+{
+	inventory.push_back(enemy_item);
 }
 
 /*

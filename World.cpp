@@ -91,12 +91,22 @@ void World::Combat()
 		{
 			//DEFEAT AND LOOT
 			iscombatFinished = true;
+			m_ptrCurrentRoom->enemy_room = nullptr;
 		}
 		else if (!player_turn)
 		{
 			//ENEMY ATTACK
 			m_ptrCurrentRoom->enemy_room->Attack(player);
-			player_turn = true;
+			if (player->current_health_points > 0) 
+			{
+				player_turn = true;
+			}
+			else 
+			{
+				std::cout << std::endl << m_ptrCurrentRoom->enemy_room->name << " killed you...." << std::endl;
+				m_gameOver = true;
+			}
+				
 		}
 
 	}
@@ -255,10 +265,10 @@ void World::HandleUserInput(const std::vector<std::string>& userInput)
 	{
 		player->Examine(userParameter);
 	}
-	else if (m_commands.ATTACK_1 == userCommand || m_commands.ATTACK_2 == userCommand)
+	/*else if (m_commands.ATTACK_1 == userCommand || m_commands.ATTACK_2 == userCommand)
 	{
-		player->Attack(userParameter);
-	}
+		player->Attack(userParameter,m_);
+	}*/
 	else if (m_commands.LOOT_1 == userCommand || m_commands.LOOT_2 == userCommand)
 	{
 		player->Loot(userParameter);
@@ -309,7 +319,7 @@ bool World::HandleUserInputCombat(const std::vector<std::string>& userInput)
 	}
 	else if (m_commands.ATTACK_1 == userCommand || m_commands.ATTACK_2 == userCommand)
 	{
-		player->Attack(userParameter);
+		player->Attack(userParameter,m_ptrCurrentRoom->enemy_room);
 		player_turn = false;
 	}
 	else if (m_commands.HELP_1 == userCommand || m_commands.HELP_2 == userCommand)
@@ -337,7 +347,7 @@ bool World::HandleUserInputCombat(const std::vector<std::string>& userInput)
 
 void World::HelpCommand() const
 {
-	std::cout << "\nHere's the list of commands you can use:" << std::endl;
+	std::cout << "\nHere's the list of commands you can use:" << std::endl << std::endl;
 
 	std::cout << toUpperCase(m_commands.GO) << "\t\t Command whose usage is to move through the map. You need to specify a direction. Values: GO (N)ORTH, (S)OUTH, (E)AST, (W)EST." << std::endl;
 	std::cout << toUpperCase(m_commands.LOOK_1) << " / " << toUpperCase(m_commands.LOOK_2)
@@ -352,8 +362,6 @@ void World::HelpCommand() const
 		<< "\t Command whose usage is to equip the item you specify (only specific items can be equiped)." << std::endl;
 	std::cout << toUpperCase(m_commands.UNEQUIP_1) << " / " << toUpperCase(m_commands.UNEQUIP_2)
 		<< "\t Command whose usage is to unequip the item you specify (only if you have it equiped)." << std::endl;
-	std::cout << toUpperCase(m_commands.ATTACK_1) << " / " << toUpperCase(m_commands.ATTACK_2)
-		<< "\t Command whose usage is to attack an enemy." << std::endl;
 	std::cout << toUpperCase(m_commands.LOOT_1) << " / " << toUpperCase(m_commands.LOOT_2)
 		<< "\t Command whose usage is to put all the items into your inventory." << std::endl;
 	std::cout << toUpperCase(m_commands.INVENTORY_1) << " / " << toUpperCase(m_commands.INVENTORY_2)
@@ -364,12 +372,12 @@ void World::HelpCommand() const
 		<< "\t Command whose usage is to use the item you specify that is in your inventory." << std::endl;
 	std::cout << toUpperCase(m_commands.QUIT_1) << " / " << toUpperCase(m_commands.QUIT_2)
 		<< "\t Command whose usage is to close the game." << std::endl;
-
+	std::cout << std::endl;
 }
 
 void World::HelpCombatCommand() const
 {
-	std::cout << "\nHere's the list of commands you can use in combat:" << std::endl;
+	std::cout << "\nHere's the list of commands you can use in combat:" << std::endl << std::endl;
 
 	std::cout << toUpperCase(m_commands.EXAMINE_1) << " / " << toUpperCase(m_commands.EXAMINE_2)
 		<< "\t Command whose usage is to describe the item you specify (if you have it on the inventory)." << std::endl;
@@ -383,6 +391,8 @@ void World::HelpCombatCommand() const
 		<< "\t Command whose usage is to use the item you specify that is in your inventory." << std::endl;
 	std::cout << toUpperCase(m_commands.QUIT_1) << " / " << toUpperCase(m_commands.QUIT_2)
 		<< "\t Command whose usage is to close the game." << std::endl;
+	std::cout << std::endl;
+
 }
 
 void World::GameOver()
