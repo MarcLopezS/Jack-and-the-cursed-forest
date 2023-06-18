@@ -4,14 +4,10 @@
 #include "Enemy.h"
 
 
-void Room::SetupEnemy(Enemy* enemy)
-{
-	enemy_room = enemy;
-}
-
 Room::Room()
 {
 	SetupRoom();
+	enemy_room = nullptr;
 }
 
 Room::Room(const std::string& name, const std::string& description)
@@ -41,6 +37,11 @@ void Room::SetupItem(std::vector<Item> items)
 	{
 		items_room.push_back(&element);
 	}
+}
+
+void Room::SetupEnemy(Enemy* enemy)
+{
+	enemy_room = new Enemy(*enemy);
 }
 
 void Room::SetupRoom(const std::string& name, const std::string& description)

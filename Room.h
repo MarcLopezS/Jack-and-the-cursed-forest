@@ -41,8 +41,6 @@ public:
 	Room();
 	Room(const std::string& name, const std::string& description);
 	~Room();
-	
-	Enemy* enemy_room;
 
 	void SetupEnemy(Enemy* enemy);
 	void SetupRoom(const std::string& name = std::string(), const std::string& description = std::string());
@@ -64,6 +62,8 @@ public:
 	Room* ptrNeighbourWest;
 
 	std::vector<Item*> items_room;
+
+	Enemy* enemy_room;
 
 
 };

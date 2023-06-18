@@ -11,17 +11,16 @@ World::World()
 
 	SetupRooms();
 	SetupItems();
+	SetupEnemies();
 
 	m_gameOver = false;
 }
 
 World::~World()
 {
+	//m_ptrCurrentRoom pointer is inside m_rooms, so does not require to specify it
 	std::vector<Room*>().swap(m_rooms);//de-allocate the memory taken by the vector 
 	delete player;
-	delete m_ptrCurrentRoom;
-
-
 }
 
 void World::Run()
@@ -50,7 +49,10 @@ void World::Run()
 		}
 
 		//GameOver();
-		m_ptrCurrentRoom->PrintPropertiesRoom();
+		if (!m_gameOver) {
+			m_ptrCurrentRoom->PrintPropertiesRoom();
+		}
+		
 	}
 
 }
@@ -66,10 +68,14 @@ void World::Combat()
 	std::vector<std::string> userCommands;
 	std::string input;
 
-	while (!iscombatFinished)
+	
+
+	while (!iscombatFinished && !m_gameOver)
 	{
+		std::cout << "----------------------------------- " << std::endl;
 		std::cout << std::endl << "COMBAT\t" << m_ptrCurrentRoom->enemy_room->name << std::endl;
 		std::cout << std::endl << "Jack HP: " << player->current_health_points << "/" << player->max_health_points << std::endl;
+		std::cout << "----------------------------------- " << std::endl << std::endl;
 		std::cout << std::endl << "Which combat action are you going to do now?" << std::endl;
 
 		//Get user input
