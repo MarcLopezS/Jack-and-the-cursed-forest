@@ -186,7 +186,8 @@ void World::SetupNeighbors(Room* rooms)
 
 void World::SetupItems()
 {
-	Item* potion = new Item("Potion", "A liquid that helps healing wounds. Restores 75HP.", ItemType::COMMON, false);
+	ListItems listItems;
+	Item* potion = new Item(listItems.POTION, "A liquid that helps healing wounds. Restores 75HP.", ItemType::COMMON, false);
 
 	m_rooms[river]->SetupItem(potion);
 	m_rooms[spine_territory_6]->SetupItem(potion);
@@ -197,6 +198,10 @@ void World::SetupItems()
 	Item* key = new Item("Mine key", "A key that has a label that says \"Mine\".", ItemType::KEY_ITEM, false);
 
 	m_rooms[warehouse]->SetupItem(key);
+
+	Item* sword = new Item(listItems.SWORD, "A sword found in the great tree.", ItemType::WEAPON, true);
+
+	m_rooms[forest_greatTree]->SetupItem(sword);
 
 	Item* water_gem = new Item("Water gem", "A special gem that, according to the legend, has the power to control water.", ItemType::KEY_ITEM, true);
 	Item* life_gem = new Item("Life gem", "A special gem that, according to the legend, has the power to control life of the living beings.", ItemType::KEY_ITEM, true);
@@ -209,10 +214,12 @@ void World::SetupItems()
 
 void World::SetupEnemies()
 {
-	Item* fangs = new Item("Fangs", "The fangs of an animal. Very powerful and sharp", ItemType::WEAPON, false);
+	ListItems listItems;
+
+	Item* fangs = new Item(listItems.FANGS, "The fangs of an animal. Very powerful and sharp", ItemType::WEAPON, false);
 	Enemy* wolf = new Enemy("Wolf", "A creature borned in the forest. With their powerful fangs can destroy their enemies.", CreatureType::ENEMY, fangs);
 
-	Enemy* snake = new Enemy("Wolf", "A creature borned in the forest. With their powerful fangs and large body can cause the death of their enemies.", CreatureType::ENEMY, fangs);
+	Enemy* snake = new Enemy("Snake", "A creature borned in the forest. With their powerful fangs and large body can cause the death of their enemies.", CreatureType::ENEMY, fangs);
 
 	m_rooms[river]->SetupEnemy(snake);
 	m_rooms[spine_territory_3]->SetupEnemy(wolf);
@@ -226,10 +233,11 @@ void World::HandleUserInput(const std::vector<std::string>& userInput)
 {
 	std::string userCommand = toLowerCase(userInput.at(0));
 	std::string userParameter = userInput.size() > 1 ? toLowerCase(userInput.at(1)) : "";
-
+	std::string userParameter2 = userInput.size() > 2 ? toLowerCase(userInput.at(2)) : "";
+	
 	if (m_commands.GO == userCommand)
 	{
-		bool isGoOK = player->Go(userParameter);
+		bool isGoOK = player->Go(userParameter, m_ptrCurrentRoom);
 
 		if (isGoOK)
 			GoDestination(userParameter);
@@ -243,7 +251,7 @@ void World::HandleUserInput(const std::vector<std::string>& userInput)
 	}
 	else if (m_commands.TAKE_1 == userCommand || m_commands.TAKE_2 == userCommand)
 	{
-		player->Take(userParameter, m_ptrCurrentRoom);
+		player->Take(userParameter, userParameter2, m_ptrCurrentRoom);
 	}
 	else if (m_commands.DROP_1 == userCommand || m_commands.DROP_2 == userCommand)
 	{
@@ -255,11 +263,11 @@ void World::HandleUserInput(const std::vector<std::string>& userInput)
 	}
 	else if (m_commands.EQUIP_1 == userCommand || m_commands.EQUIP_2 == userCommand)
 	{
-		player->Equip(userParameter);
+		player->Equip();
 	}
 	else if (m_commands.UNEQUIP_1 == userCommand || m_commands.UNEQUIP_2 == userCommand)
 	{
-		player->UnEquip(userParameter);
+		player->UnEquip();
 	}
 	else if (m_commands.EXAMINE_1 == userCommand || m_commands.EXAMINE_2 == userCommand)
 	{

@@ -14,13 +14,13 @@ public:
 	Player(const std::string& name, const std::string& description, CreatureType creature_type);
 	~Player();
 
-	bool Go(const std::string& userInput);
+	bool Go(const std::string& userInput, Room* current_room);
 	void Look(Room* currentRoom) const;
-	void Take(const std::string& userInput, Room* currentRoom);
+	void Take(const std::string& userInput, const std::string& userInput2, Room* currentRoom);
 	void Drop(const std::string& userInput, Room* currentRoom);
 	void Inventory() const;
-	void Equip(const std::string& userInput);
-	void UnEquip(const std::string& userInput);
+	void Equip();
+	void UnEquip();
 	void Examine(const std::string& userInput) const;
 	void Attack(const std::string& userInput, Enemy* enemy);
 	void Loot(const std::string& userInput);
@@ -41,7 +41,7 @@ private:
 	int strength;
 
 	std::vector<Item*> inventory;
-	std::vector<Item*> equipedItems;
+	Item* equipedWeapon;
 
 };
 

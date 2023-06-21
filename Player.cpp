@@ -6,7 +6,8 @@ Player::Player(const std::string& name, const std::string& description, Creature
 	: Creature(name, description,creature_type)
 {
 	SetHealth();
-	strength = 20;
+	strength = 5;
+	equipedWeapon = nullptr;
 }
 
 Player::~Player()
@@ -16,23 +17,23 @@ Player::~Player()
 /*
 * We check if userInput is a valid direction to use the function GoDestination() in World class.
 */
-bool Player::Go(const std::string& userInput)
+bool Player::Go(const std::string& userInput, Room* current_room)
 {
 	bool inputExist = false;
 
-	if (userInput == "north" || userInput == "n")
+	if ((userInput == "north" || userInput == "n") && current_room->ptrNeighbourNorth != nullptr)
 	{
 		inputExist = true;
 	}
-	else if (userInput == "south" || userInput == "s")
+	else if ((userInput == "south" || userInput == "s") && current_room->ptrNeighbourSouth != nullptr)
 	{
 		inputExist = true;
 	}
-	else if (userInput == "east" || userInput == "e")
+	else if ((userInput == "east" || userInput == "e") && current_room->ptrNeighbourEast != nullptr)
 	{
 		inputExist = true;
 	}
-	else if (userInput == "west" || userInput == "w")
+	else if ((userInput == "west" || userInput == "w") && current_room->ptrNeighbourWest != nullptr)
 	{
 		inputExist = true;
 	}
@@ -57,16 +58,38 @@ void Player::Look(Room* currentRoom) const
 	currentRoom->OutputNeighbors();
 }
 
-void Player::Take(const std::string& userInput, Room* currentRoom)
+void Player::Take(const std::string& userInput, const std::string& userInput2, Room* currentRoom)
 {
+	bool item_exist = false;
+	std::vector<std::string> aux_vector;
+
 	for (unsigned int i = 0; i < currentRoom->items_room.size(); i++)
 	{
-		if (toLowerCase(currentRoom->items_room[i]->name) == toLowerCase(userInput)) {
+		aux_vector = tokenize(currentRoom->items_room[i]->name);
+		if (aux_vector.size() > 1 && userInput2 != "")
+		{
+			if (toLowerCase(aux_vector[0]) == toLowerCase(userInput) &&
+				toLowerCase(aux_vector[1]) == toLowerCase(userInput2))
+			{
+				std::cout << "You take " << currentRoom->items_room[i]->name << ". You put the item in your inventory." << std::endl;
+				inventory.push_back(currentRoom->items_room[i]);
+				currentRoom->items_room.erase(currentRoom->items_room.begin() + i);
+				item_exist = true;
+			}
+
+		}else if (userInput2 == "" && toLowerCase(currentRoom->items_room[i]->name) == toLowerCase(userInput)) {
+
+			std::cout << "You take " << currentRoom->items_room[i]->name << ". You put the item in your inventory." << std::endl;
 			inventory.push_back(currentRoom->items_room[i]);
 			currentRoom->items_room.erase(currentRoom->items_room.begin() + i);
+			item_exist = true;
 		}
 	}
-	
+		
+	if(!item_exist)
+	{
+		std::cout << "There is no items here or not with the specified name! Put a correct item name if exist and try again." << std::endl;
+	}
 }
 
 void Player::Drop(const std::string& userInput, Room* currentRoom)
@@ -99,12 +122,38 @@ void Player::Inventory() const
 	}
 }
 
-void Player::Equip(const std::string& userInput)
+void Player::Equip()
 {
+	bool itemEquipped = false;
+
+	for (size_t i = 0; i < inventory.size(); i++)
+	{
+		if ( inventory[i]->itemGameType == ItemType::WEAPON)
+		{
+			equipedWeapon = inventory[i];
+			itemEquipped = true;
+			std::cout << "You equipped " << inventory[i]->name << "." << std::endl;
+			inventory.erase(inventory.begin() + i);
+
+		}
+	}
+
+	if (!itemEquipped)
+		std::cout << "You don't have any weapon to equip..." << std::endl;
 }
 
-void Player::UnEquip(const std::string& userInput)
+void Player::UnEquip()
 {
+	if (equipedWeapon != nullptr)
+	{
+		inventory.push_back(equipedWeapon);
+		std::cout << "You unequipped " << equipedWeapon->name << "." << std::endl;
+		equipedWeapon = nullptr;
+	}
+	else 
+	{
+		std::cout << "You already have nothing equipped..." << std::endl;
+	}
 }
 
 void Player::Examine(const std::string& userInput) const
@@ -126,7 +175,7 @@ void Player::Examine(const std::string& userInput) const
 
 void Player::Attack(const std::string& userInput, Enemy* enemy)
 {
-	int damage_weapon = equipedItems.size() == 1 ? equipedItems.front()->GetValueItem() : 0;
+	int damage_weapon = equipedWeapon != nullptr ? equipedWeapon->GetValueItem() : 0;
 	int critic_rate = 20;
 	int control_probability = rand() % 100 + 1; //to control critic probability
 	
@@ -175,10 +224,10 @@ void Player::Status() const
 {
 	std::cout << "HP: " << current_health_points << "/" << max_health_points << std::endl;
 	std::cout << "Strength: " << strength << std::endl;
-	if (equipedItems.size() != 0)
+	if (equipedWeapon != nullptr)
 	{
-		std::cout << "Equiped weapon: " << equipedItems.front()->name;
-		std::cout << "Weapon attack: " << equipedItems.front()->GetValueItem();
+		std::cout << "Equiped weapon: " << equipedWeapon->name << std::endl;
+		std::cout << "Weapon attack: " << equipedWeapon->GetValueItem() << std::endl;
 	}
 	std::cout << std::endl;
 }
@@ -204,7 +253,7 @@ void Player::LootEnemy(Item* enemy_item)
 */
 bool Player::HandleItemInput(const std::string& itemInput)
 {
-	if (listItems.POTION == toLowerCase(itemInput))
+	if (toLowerCase(listItems.POTION) == toLowerCase(itemInput))
 	{
 		if (current_health_points != max_health_points) 
 		{
