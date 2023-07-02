@@ -22,7 +22,7 @@ public:
 	void Inventory() const;
 	void Equip();
 	void UnEquip();
-	void Examine(const std::string& userInput) const;
+	void Examine(const std::string& userInput, const std::string& userInput2) const;
 	void Attack(const std::string& userInput, Enemy* enemy);
 	void Loot(const std::string& userInput);
 	void Use(const std::string& userInput);

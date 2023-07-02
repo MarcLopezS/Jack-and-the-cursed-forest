@@ -17,6 +17,10 @@ Item::~Item()
 void Item::PrintDetails()
 {
 	std::cout << "Item name: " << name << std::endl << "Details: " << description << std::endl;
+	if(itemGameType == ItemType::WEAPON)
+		std::cout << "Weapon attack: " << value_item << std::endl;
+
+	std::cout << std::endl;
 }
 
 void Item::CombineItems(Item combinableItem, const std::string& newName, const std::string& newDescription)

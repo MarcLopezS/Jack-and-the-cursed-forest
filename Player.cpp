@@ -156,13 +156,23 @@ void Player::UnEquip()
 	}
 }
 
-void Player::Examine(const std::string& userInput) const
+void Player::Examine(const std::string& userInput, const std::string& userInput2) const
 {
 	bool itemExist = false;
+	std::vector<std::string> auxVector;
 	
 	for (auto& item : inventory)
 	{
-		if (toLowerCase(item->name) == userInput) 
+		auxVector = tokenize(toLowerCase(item->name));
+		if (auxVector.size() > 1)
+		{
+			if (auxVector[0] == userInput && auxVector[1] == userInput2)
+			{
+				item->PrintDetails();
+				itemExist = true;
+			}
+		}
+		else if(auxVector.size() == 1 && auxVector[0] == userInput)
 		{
 			item->PrintDetails();
 			itemExist = true;
@@ -264,7 +274,7 @@ void Player::Combine()
 			{
 				inventory.push_back(resultCombination);
 
-				std::cout << "Combination succesful! You obtain " << resultCombination->name  << "!" << std::endl;
+				std::cout << "Combination successful! You obtain " << resultCombination->name  << "!" << std::endl;
 				std::cout << "You put " << resultCombination->name << " in your inventory." << std::endl << std::endl;
 
 				auto itItem1 = std::find_if(inventory.begin(), inventory.end(), [input1](Item* item) {

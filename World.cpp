@@ -279,7 +279,7 @@ void World::HandleUserInput(const std::vector<std::string>& userInput)
 	}
 	else if (m_commands.EXAMINE_1 == userCommand || m_commands.EXAMINE_2 == userCommand)
 	{
-		player->Examine(userParameter);
+		player->Examine(userParameter, userParameter2);
 	}
 	/*else if (m_commands.ATTACK_1 == userCommand || m_commands.ATTACK_2 == userCommand)
 	{
@@ -319,6 +319,7 @@ bool World::HandleUserInputCombat(const std::vector<std::string>& userInput)
 	bool player_turn = true;
 	std::string userCommand = toLowerCase(userInput.at(0));
 	std::string userParameter = userInput.size() > 1 ? toLowerCase(userInput.at(1)) : "";
+	std::string userParameter2 = userInput.size() > 2 ? toLowerCase(userInput.at(2)) : "";
 
 	if (m_commands.GO == userCommand)
 	{
@@ -335,7 +336,7 @@ bool World::HandleUserInputCombat(const std::vector<std::string>& userInput)
 	}
 	else if (m_commands.EXAMINE_1 == userCommand || m_commands.EXAMINE_2 == userCommand)
 	{
-		player->Examine(userParameter);
+		player->Examine(userParameter, userParameter2);
 	}
 	else if (m_commands.ATTACK_1 == userCommand || m_commands.ATTACK_2 == userCommand)
 	{
@@ -386,6 +387,8 @@ void World::HelpCommand() const
 		<< "\t Command whose usage is to put all the items into your inventory." << std::endl;
 	std::cout << toUpperCase(m_commands.INVENTORY_1) << " / " << toUpperCase(m_commands.INVENTORY_2)
 		<< "\t Command whose usage is to show all items inside the inventory." << std::endl;
+	std::cout << toUpperCase(m_commands.COMBINE_1) << " / " << toUpperCase(m_commands.COMBINE_2)
+		<< "\t Command whose usage is to show combine menu, to combine 2 items." << std::endl;
 	std::cout << toUpperCase(m_commands.STATS_1) << " / " << toUpperCase(m_commands.STATS_2)
 		<< "\t Command whose usage is to show the stats of Jack and equiped items." << std::endl;
 	std::cout << toUpperCase(m_commands.USE_1) << " / " << toUpperCase(m_commands.USE_2)
