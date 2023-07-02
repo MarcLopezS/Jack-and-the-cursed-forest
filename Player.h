@@ -5,6 +5,7 @@
 #include "Room.h"
 #include "Global.h"
 #include "Enemy.h"
+#include "Combination.h"
 
 class Enemy;
 
@@ -25,6 +26,7 @@ public:
 	void Attack(const std::string& userInput, Enemy* enemy);
 	void Loot(const std::string& userInput);
 	void Use(const std::string& userInput);
+	void Combine();
 	void Status() const;
 	//void Exit(const std::string& userInput);
 

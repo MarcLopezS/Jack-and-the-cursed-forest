@@ -1,9 +1,2 @@
-﻿  Enemy.cpp
-  Global.cpp
-  Item.cpp
-  Player.cpp
-  Room.cpp
-  World.cpp
-  main.cpp
-  Generating Code...
+﻿  Player.cpp
   TextAdventureGame.vcxproj -> C:\Users\GAMER\Desktop\Text game adventure\Jack-and-the-cursed-forest\x64\Debug\TextAdventureGame.exe

@@ -55,7 +55,7 @@ void Item::ClassifyWeaponValue()
 	if (name == listItems.SWORD) value_item = listItems.SWORD_VALUE;
 	if (name == listItems.HYDROSWORD) value_item = listItems.HYDROSWORD_VALUE;
 	if (name == listItems.VITAL_SWORD) value_item = listItems.VITAL_SWORD_VALUE;
-	if (name == listItems.GEO_SWORD) value_item = listItems.GEO_SWORD_VALUE;
+	if (name == listItems.GEOSWORD) value_item = listItems.GEO_SWORD_VALUE;
 	if (name == listItems.BLESSED_SWORD) value_item = listItems.BLESSED_SWORD_VALUE;
 	if (name == listItems.MUDDY_SWORD) value_item = listItems.MUDDY_SWORD_VALUE;
 	if (name == listItems.ETHEREAL_SWORD) value_item = listItems.ETHEREAL_SWORD_VALUE;

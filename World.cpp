@@ -201,15 +201,23 @@ void World::SetupItems()
 
 	Item* sword = new Item(listItems.SWORD, "A sword found in the great tree.", ItemType::WEAPON, true);
 
-	m_rooms[forest_greatTree]->SetupItem(sword);
+	
 
-	Item* water_gem = new Item("Water gem", "A special gem that, according to the legend, has the power to control water.", ItemType::KEY_ITEM, true);
-	Item* life_gem = new Item("Life gem", "A special gem that, according to the legend, has the power to control life of the living beings.", ItemType::KEY_ITEM, true);
-	Item* earth_gem = new Item("Earth gem", "A special gem that, according to the legend, has the power to control eathrquakes and modify the ecosystem.", ItemType::KEY_ITEM, true);
+	Item* water_gem = new Item(listItems.WATER_GEM, "A special gem that, according to the legend, has the power to control water.", ItemType::KEY_ITEM, true);
+	Item* life_gem = new Item(listItems.LIFE_GEM, "A special gem that, according to the legend, has the power to control life of the living beings.", ItemType::KEY_ITEM, true);
+	Item* earth_gem = new Item(listItems.EARTH_GEM, "A special gem that, according to the legend, has the power to control eathrquakes and modify the ecosystem.", ItemType::KEY_ITEM, true);
 
 	m_rooms[water_Altar]->SetupItem(water_gem);
 	m_rooms[life_altar]->SetupItem(life_gem);
 	m_rooms[earth_altar]->SetupItem(earth_gem);
+
+	//test
+	m_rooms[forest_greatTree]->SetupItem(water_gem);
+	m_rooms[forest_greatTree]->SetupItem(life_gem); 
+	m_rooms[forest_greatTree]->SetupItem(earth_gem);
+	m_rooms[forest_greatTree]->SetupItem(sword);
+	m_rooms[forest_greatTree]->SetupItem(potion);
+	m_rooms[forest_greatTree]->SetupItem(potion);
 }
 
 void World::SetupEnemies()
@@ -292,6 +300,10 @@ void World::HandleUserInput(const std::vector<std::string>& userInput)
 	else if (m_commands.USE_1 == userCommand || m_commands.USE_2 == userCommand)
 	{
 		player->Use(userParameter);
+	}
+	else if (m_commands.COMBINE_1 == userCommand || m_commands.COMBINE_2 == userCommand)
+	{
+		player->Combine();
 	}
 	else if (m_commands.STATS_1 == userCommand || m_commands.STATS_2 == userCommand)
 	{

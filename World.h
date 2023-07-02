@@ -36,6 +36,8 @@ struct actions_command
 	std::string QUIT_2 = "q";
 	std::string USE_1 = "use";
 	std::string USE_2 = "u";
+	std::string COMBINE_1 = "combine";
+	std::string COMBINE_2 = "c";
 
 };
 

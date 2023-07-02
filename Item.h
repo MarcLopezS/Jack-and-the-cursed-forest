@@ -13,7 +13,12 @@ enum class ItemType
 struct ListItems
 {
 	public:
+		std::string WATER_GEM = "Water gem";
+		std::string LIFE_GEM = "Life gem"; 
+		std::string EARTH_GEM = "Earth gem";
+
 		std::string POTION = "Potion";
+		
 		int POTION_VALUE = 75;
 
 		std::string FANGS = "Fangs";
@@ -28,7 +33,7 @@ struct ListItems
 		std::string VITAL_SWORD = "Vital sword";
 		int VITAL_SWORD_VALUE = 25;
 
-		std::string GEO_SWORD = "Geosword";
+		std::string GEOSWORD = "Geosword";
 		int GEO_SWORD_VALUE = 25;
 
 		std::string BLESSED_SWORD = "Blessed sword";
