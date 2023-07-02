@@ -334,6 +334,14 @@ bool World::HandleUserInputCombat(const std::vector<std::string>& userInput)
 	{
 		player->Inventory();
 	}
+	else if (m_commands.EQUIP_1 == userCommand || m_commands.EQUIP_2 == userCommand)
+	{
+		player->Equip();
+	}
+	else if (m_commands.UNEQUIP_1 == userCommand || m_commands.UNEQUIP_2 == userCommand)
+	{
+		player->UnEquip();
+	}
 	else if (m_commands.EXAMINE_1 == userCommand || m_commands.EXAMINE_2 == userCommand)
 	{
 		player->Examine(userParameter, userParameter2);
@@ -408,6 +416,10 @@ void World::HelpCombatCommand() const
 		<< "\t Command whose usage is to attack an enemy." << std::endl;
 	std::cout << toUpperCase(m_commands.INVENTORY_1) << " / " << toUpperCase(m_commands.INVENTORY_2)
 		<< "\t Command whose usage is to show all items inside the inventory." << std::endl;
+	std::cout << toUpperCase(m_commands.EQUIP_1) << " / " << toUpperCase(m_commands.EQUIP_2)
+		<< "\t Command whose usage is to equip the item you specify (only specific items can be equiped)." << std::endl;
+	std::cout << toUpperCase(m_commands.UNEQUIP_1) << " / " << toUpperCase(m_commands.UNEQUIP_2)
+		<< "\t Command whose usage is to unequip the item you specify (only if you have it equiped)." << std::endl;
 	std::cout << toUpperCase(m_commands.STATS_1) << " / " << toUpperCase(m_commands.STATS_2)
 		<< "\t Command whose usage is to show the stats of Jack and equiped items." << std::endl;
 	std::cout << toUpperCase(m_commands.USE_1) << " / " << toUpperCase(m_commands.USE_2)
