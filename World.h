@@ -55,6 +55,7 @@ public:
 	void HelpCombatCommand() const;
 	void GameOver();
 	void GoDestination(const std::string& direction);
+	void PrintCombatStats();
 
 	Player* player;
 
@@ -64,6 +65,7 @@ private:
 	void SetupNeighbors(Room* rooms);
 	void SetupItems();
 	void SetupEnemies();
+	void ReturnRoomCheckpoint();
 
 	const int m_n_rooms = 16;
 
@@ -74,8 +76,6 @@ private:
 	const actions_command m_commands;
 
 	bool m_gameOver;
-
-
 
 };
 

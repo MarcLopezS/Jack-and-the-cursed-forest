@@ -62,20 +62,15 @@ void World::Combat()
 	std::cout << "You found a " << m_ptrCurrentRoom->enemy_room->name << "!" << std::endl;
 	std::cout << "You change to combat mode." << std::endl;
 
-	bool iscombatFinished = false;
-	bool player_turn = true;
+	bool iscombatFinished = false, player_turn = true;
 
 	std::vector<std::string> userCommands;
 	std::string input;
 
-	
-
 	while (!iscombatFinished && !m_gameOver)
 	{
-		std::cout << "----------------------------------- " << std::endl;
-		std::cout << std::endl << "COMBAT\t" << m_ptrCurrentRoom->enemy_room->name << std::endl;
-		std::cout << std::endl << "Jack HP: " << player->current_health_points << "/" << player->max_health_points << std::endl;
-		std::cout << "----------------------------------- " << std::endl << std::endl;
+		PrintCombatStats();
+
 		std::cout << std::endl << "Which combat action are you going to do now?" << std::endl;
 
 		//Get user input
@@ -103,14 +98,24 @@ void World::Combat()
 			}
 			else 
 			{
+				iscombatFinished = true;
 				std::cout << std::endl << m_ptrCurrentRoom->enemy_room->name << " killed you...." << std::endl;
-				m_gameOver = true;
+				m_ptrCurrentRoom->enemy_room->SetHealth();
+				ReturnRoomCheckpoint();
 			}
 				
 		}
 
 	}
 
+}
+
+void World::PrintCombatStats()
+{
+	std::cout << "----------------------------------- " << std::endl;
+	std::cout << std::endl << "COMBAT\t" << m_ptrCurrentRoom->enemy_room->name << std::endl;
+	std::cout << std::endl << "Jack HP: " << player->current_health_points << "/" << player->max_health_points << std::endl;
+	std::cout << "----------------------------------- " << std::endl << std::endl;
 }
 
 void World::SetupRooms()
@@ -200,9 +205,6 @@ void World::SetupItems()
 	m_rooms[warehouse]->SetupItem(key);
 
 	Item* sword = new Item(listItems.SWORD, "A sword found in the great tree.", ItemType::WEAPON, true);
-
-	
-
 	Item* water_gem = new Item(listItems.WATER_GEM, "A special gem that, according to the legend, has the power to control water.", ItemType::KEY_ITEM, true);
 	Item* life_gem = new Item(listItems.LIFE_GEM, "A special gem that, according to the legend, has the power to control life of the living beings.", ItemType::KEY_ITEM, true);
 	Item* earth_gem = new Item(listItems.EARTH_GEM, "A special gem that, according to the legend, has the power to control eathrquakes and modify the ecosystem.", ItemType::KEY_ITEM, true);
@@ -237,6 +239,14 @@ void World::SetupEnemies()
 
 }
 
+/**
+ * @brief Identifies which command user requested in non-combat areas.
+ *
+ * Depending on the command, is required to insert none, one or two words.
+ *
+ * @param userInput: All the input that the user inserted (COMMAND + word / COMMAND + word + word).
+ * @return Returns a boolean to control the turn of the player in combat.
+*/
 void World::HandleUserInput(const std::vector<std::string>& userInput)
 {
 	std::string userCommand = toLowerCase(userInput.at(0));
@@ -313,7 +323,14 @@ void World::HandleUserInput(const std::vector<std::string>& userInput)
 		std::cout << "Invalid or wrong usage command. Please try again." << std::endl;
 }
 
-//returns a boolean to control the turn of the player in combat
+/**
+ * @brief Identifies which command user requested in combat. 
+ * 
+ * Depending on the command, is required to insert none, one or two words.
+ * 
+ * @param userInput: All the input that the user inserted (COMMAND + word / COMMAND + word + word).
+ * @return Returns a boolean to control the turn of the player in combat. 
+*/
 bool World::HandleUserInputCombat(const std::vector<std::string>& userInput)
 {
 	bool player_turn = true;
@@ -453,4 +470,13 @@ void World::GoDestination(const std::string& direction)
 	{
 		m_ptrCurrentRoom = m_ptrCurrentRoom->ptrNeighbourWest;
 	}
+}
+
+/**
+ * @brief Return player to checkpoint room if dies.
+*/
+void World::ReturnRoomCheckpoint()
+{
+	m_ptrCurrentRoom = m_rooms[forest_greatTree];
+	player->SetHealth();
 }

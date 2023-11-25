@@ -15,7 +15,7 @@ Player::~Player()
 }
 
 /*
-* We check if userInput is a valid direction to use the function GoDestination() in World class.
+* Check if userInput is a valid direction to use the function GoDestination() in World class.
 */
 bool Player::Go(const std::string& userInput, Room* current_room)
 {
@@ -40,6 +40,7 @@ bool Player::Go(const std::string& userInput, Room* current_room)
 
 	return inputExist;
 }
+
 void Player::Look(Room* currentRoom) const
 {
 	if (currentRoom->items_room.size() != 0)
@@ -49,11 +50,11 @@ void Player::Look(Room* currentRoom) const
 		{
 			std::cout << item->name << std::endl;
 		}
-
 	}
 	else {
 		std::cout << "You don't see any objects to be taken nearby." << std::endl;
 	}
+
 	std::cout << std::endl;
 	currentRoom->OutputNeighbors();
 }
@@ -65,24 +66,20 @@ void Player::Take(const std::string& userInput, const std::string& userInput2, R
 
 	for (unsigned int i = 0; i < currentRoom->items_room.size(); i++)
 	{
-		aux_vector = tokenize(currentRoom->items_room[i]->name);
+		auto itemsRoom = currentRoom->items_room;
+
+		aux_vector = tokenize(itemsRoom[i]->name);
+
 		if (aux_vector.size() > 1 && userInput2 != "")
 		{
-			if (toLowerCase(aux_vector[0]) == toLowerCase(userInput) &&
-				toLowerCase(aux_vector[1]) == toLowerCase(userInput2))
+			if (toLowerCase(aux_vector[0]) == toLowerCase(userInput) && toLowerCase(aux_vector[1]) == toLowerCase(userInput2))
 			{
-				std::cout << "You take " << currentRoom->items_room[i]->name << ". You put the item in your inventory." << std::endl;
-				inventory.push_back(currentRoom->items_room[i]);
-				currentRoom->items_room.erase(currentRoom->items_room.begin() + i);
-				item_exist = true;
+				TakeItemToInventory(item_exist,i,currentRoom);
 			}
 
-		}else if (userInput2 == "" && toLowerCase(currentRoom->items_room[i]->name) == toLowerCase(userInput)) {
+		}else if (userInput2 == "" && toLowerCase(itemsRoom[i]->name) == toLowerCase(userInput)) {
 
-			std::cout << "You take " << currentRoom->items_room[i]->name << ". You put the item in your inventory." << std::endl;
-			inventory.push_back(currentRoom->items_room[i]);
-			currentRoom->items_room.erase(currentRoom->items_room.begin() + i);
-			item_exist = true;
+			TakeItemToInventory(item_exist, i, currentRoom);
 		}
 	}
 		
@@ -110,7 +107,6 @@ void Player::Drop(const std::string& userInput, Room* currentRoom)
 		}
 	}
 }
-
 
 void Player::Inventory() const
 {
@@ -205,10 +201,6 @@ void Player::Attack(const std::string& userInput, Enemy* enemy)
 void Player::Loot(const std::string& userInput)
 {
 }
-
-/*void Player::Exit(const std::string& userInput)
-{
-}*/
 
 void Player::Use(const std::string& userInput)
 {
@@ -354,4 +346,12 @@ bool Player::HandleItemInput(const std::string& itemInput)
 		}
 	}
 	return false;
+}
+
+void Player::TakeItemToInventory(bool& item_exist, int posItem, Room* currentRoom)
+{
+	std::cout << "You take " << currentRoom->items_room[posItem]->name << ". You put the item in your inventory." << std::endl;
+	inventory.push_back(currentRoom->items_room[posItem]);
+	currentRoom->items_room.erase(currentRoom->items_room.begin() + posItem);
+	item_exist = true;
 }

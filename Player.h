@@ -36,7 +36,7 @@ public:
 	std::vector<Item*> GetInventory();
 	bool HandleItemInput(const std::string& itemInput);
 
-
+	void TakeItemToInventory(bool& item_exist, int posItem, Room* currentRoom);
 
 private:
 	const ListItems listItems;
