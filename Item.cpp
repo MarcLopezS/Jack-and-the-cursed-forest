@@ -65,4 +65,5 @@ void Item::ClassifyWeaponValue()
 	if (name == listItems.ETHEREAL_SWORD) value_item = listItems.ETHEREAL_SWORD_VALUE;
 	if (name == listItems.GAIA_SWORD) value_item = listItems.GAIA_SWORD_VALUE;
 	if (name == listItems.FANGS) value_item = listItems.FANG_VALUE;
+	if (name == listItems.FIRE_WAND) value_item = listItems.WAND_VALUE;
 }

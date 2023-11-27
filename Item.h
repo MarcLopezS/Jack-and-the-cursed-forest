@@ -23,6 +23,9 @@ struct ListItems
 
 		std::string FANGS = "Fangs";
 		int FANG_VALUE = 20;
+		
+		std::string FIRE_WAND = "Fire wand";
+		int WAND_VALUE = 30;
 
 		std::string SWORD = "Sword";
 		int SWORD_VALUE = 20;

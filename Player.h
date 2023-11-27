@@ -26,6 +26,7 @@ public:
 	void Attack(const std::string& userInput, Enemy* enemy);
 	void Loot(const std::string& userInput);
 	void Use(const std::string& userInput);
+	void Use(const std::string& userInput, Room* currentRoom, bool& activateBoss);
 	void Combine();
 	void Status() const;
 	//void Exit(const std::string& userInput);

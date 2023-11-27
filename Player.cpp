@@ -219,7 +219,7 @@ void Player::Use(const std::string& userInput)
 	auto it = std::find_if(inventory.begin(), inventory.end(), [userInput](Item* item) {
 		return compareNames(item, userInput);
 		});
-	
+
 	if (it != inventory.end())
 	{
 		//If using item is successful
@@ -235,10 +235,38 @@ void Player::Use(const std::string& userInput)
 	std::cout << std::endl;
 }
 
+/**
+ * @brief Special Command that activates the boss enemy if conditions are met.
+ * @param userInput: name of the item sended by user.
+ * @param currentRoom: room where the player is.
+ * @param activateBoss: FALSE by default. TRUE if conditions are met.
+*/
+void Player::Use(const std::string& userInput, Room* currentRoom, bool& activateBoss)
+{
+	auto it = std::find_if(inventory.begin(), inventory.end(), [userInput](Item* item) {
+		return compareNames(item, userInput);
+		});
+
+	
+	if ((it != inventory.end() && (*it)->name == "Gaia's sword") || equipedWeapon->name == "Gaia's sword")
+	{
+		if (currentRoom->name == "Forest Great Tree")
+		{
+			activateBoss = true;
+		}
+		else {
+			std::cout << "Gaia's sword requires to be used in Forest Great Tree. It is pointless trying to use it here!" << std::endl;
+		}
+	}
+	else {
+		std::cout << "The item you want to use does not exist or is not in your inventory." << std::endl;
+	}
+	std::cout << std::endl;
+}
+
 void Player::Combine()
 {
-	std::string input1;
-	std::string input2;
+	std::string input1, input2, nameAux;
 
 	std::cout << "Specify the first object you want to make a combination: " << std::endl;
 	std::getline(std::cin, input1);
@@ -249,7 +277,6 @@ void Player::Combine()
 	std::cout << std::endl << std::endl;
 
 	std::vector<Item*> combItemsContainer;
-	std::string nameAux;
 
 	if (tokenize(input1) != tokenize(input2))
 	{

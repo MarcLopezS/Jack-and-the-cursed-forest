@@ -14,6 +14,7 @@ World::World()
 	SetupEnemies();
 
 	m_gameOver = false;
+	m_activateBoss = false;
 }
 
 World::~World()
@@ -43,10 +44,11 @@ void World::Run()
 
 		HandleUserInput(userCommands);
 
+		if (m_activateBoss)
+			SetupBoss();
+
 		if (m_ptrCurrentRoom->enemy_room != nullptr)
-		{
 			Combat();
-		}
 
 		//GameOver();
 		if (!m_gameOver) {
@@ -86,7 +88,7 @@ void World::Combat()
 
 		if (m_ptrCurrentRoom->enemy_room->current_health_points <= 0)
 		{
-			//DEFEAT AND LOOT
+			//ENEMY DEFEAT
 			iscombatFinished = true;
 			m_ptrCurrentRoom->enemy_room = nullptr;
 		}
@@ -103,6 +105,11 @@ void World::Combat()
 				iscombatFinished = true;
 				std::cout << std::endl << m_ptrCurrentRoom->enemy_room->name << " killed you...." << std::endl;
 				m_ptrCurrentRoom->enemy_room->SetHealth();
+				if (m_activateBoss)
+				{
+					m_activateBoss = false;
+					RemoveBoss();
+				}
 				ReturnRoomCheckpoint();
 			}
 				
@@ -193,7 +200,6 @@ void World::SetupNeighbors(Room* rooms)
 
 void World::SetupItems()
 {
-	ListItems listItems;
 	Item* potion = new Item(listItems.POTION, "A liquid that helps healing wounds. Restores 75HP.", ItemType::COMMON, false);
 
 	m_rooms[river]->SetupItem(potion);
@@ -211,6 +217,8 @@ void World::SetupItems()
 	Item* life_gem = new Item(listItems.LIFE_GEM, "A special gem that, according to the legend, has the power to control life of the living beings.", ItemType::KEY_ITEM, true);
 	Item* earth_gem = new Item(listItems.EARTH_GEM, "A special gem that, according to the legend, has the power to control eathrquakes and modify the ecosystem.", ItemType::KEY_ITEM, true);
 
+	Item * gaia_sword = new Item(listItems.GAIA_SWORD, "Sacred sword from legends. According to the stories, it belonged to Gaia, the mother nature.", ItemType::WEAPON, false);
+	
 	m_rooms[water_Altar]->SetupItem(water_gem);
 	m_rooms[life_altar]->SetupItem(life_gem);
 	m_rooms[earth_altar]->SetupItem(earth_gem);
@@ -222,6 +230,8 @@ void World::SetupItems()
 	m_rooms[forest_greatTree]->SetupItem(sword);
 	m_rooms[forest_greatTree]->SetupItem(potion);
 	m_rooms[forest_greatTree]->SetupItem(potion);
+	
+	m_rooms[forest_greatTree]->SetupItem(gaia_sword);
 }
 
 void World::SetupEnemies()
@@ -239,6 +249,20 @@ void World::SetupEnemies()
 	m_rooms[spine_territory_7]->SetupEnemy(snake);
 	m_rooms[mineral_room]->SetupEnemy(snake);
 
+}
+
+void World::SetupBoss()
+{
+	Item* fire_wand = new Item(listItems.FIRE_WAND, "Cursed wand that uses the power from hell thanks to the fire gem.", ItemType::WEAPON, false);
+
+	Enemy* boss = new Enemy("Infernal Witch", "A creature borned from hell. Responsible for the curse of the the forest.", CreatureType::BOSS, fire_wand);
+
+	m_rooms[forest_greatTree]->SetupEnemy(boss);
+}
+
+void World::RemoveBoss()
+{
+	m_rooms[forest_greatTree]->enemy_room = nullptr;
 }
 
 /**
@@ -311,7 +335,10 @@ void World::HandleUserInput(const std::vector<std::string>& userInput)
 	}
 	else if (m_commands.USE_1 == userCommand || m_commands.USE_2 == userCommand)
 	{
-		player->Use(userParameter);
+		if(userParameter != "gaia's" && userParameter2 != "sword")
+			player->Use(userParameter);
+		else
+			player->Use("gaia's sword",m_ptrCurrentRoom,m_activateBoss);
 	}
 	else if (m_commands.COMBINE_1 == userCommand || m_commands.COMBINE_2 == userCommand)
 	{

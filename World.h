@@ -58,6 +58,7 @@ public:
 	void PrintCombatStats();
 
 	Player* player;
+	ListItems listItems;
 
 private:
 
@@ -65,6 +66,8 @@ private:
 	void SetupNeighbors(Room* rooms);
 	void SetupItems();
 	void SetupEnemies();
+	void SetupBoss();
+	void RemoveBoss();
 	void ReturnRoomCheckpoint();
 
 	const int m_n_rooms = 16;
@@ -76,6 +79,8 @@ private:
 	const actions_command m_commands;
 
 	bool m_gameOver;
+	bool m_activateBoss;
+
 
 };
 
