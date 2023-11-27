@@ -32,7 +32,7 @@ void World::Run()
 
 	while (!m_gameOver)
 	{
-		std::cout << std::endl << "What are you going to do now?" << std::endl;
+		std::cout << std::endl << "What are you going to do now?" << std::endl << ">> ";
 
 		//Get user input
 		std::getline(std::cin, input);
@@ -61,6 +61,7 @@ void World::Combat()
 {
 	std::cout << "You found a " << m_ptrCurrentRoom->enemy_room->name << "!" << std::endl;
 	std::cout << "You change to combat mode." << std::endl;
+	std::cout << std::endl;
 
 	bool iscombatFinished = false, player_turn = true;
 
@@ -72,6 +73,7 @@ void World::Combat()
 		PrintCombatStats();
 
 		std::cout << std::endl << "Which combat action are you going to do now?" << std::endl;
+		std::cout << ">> ";
 
 		//Get user input
 		std::getline(std::cin, input);
@@ -114,7 +116,7 @@ void World::PrintCombatStats()
 {
 	std::cout << "----------------------------------- " << std::endl;
 	std::cout << std::endl << "COMBAT\t" << m_ptrCurrentRoom->enemy_room->name << std::endl;
-	std::cout << std::endl << "Jack HP: " << player->current_health_points << "/" << player->max_health_points << std::endl;
+	std::cout << std::endl << "Jack HP: " << player->current_health_points << "/" << player->max_health_points << std::endl << std::endl ;
 	std::cout << "----------------------------------- " << std::endl << std::endl;
 }
 
@@ -124,7 +126,7 @@ void World::SetupRooms()
 
 	Room* rooms = new Room[nRooms];
 
-	rooms[village].SetupDetailsRoom("Village", "The village where you have been living your entire life");
+	rooms[village].SetupDetailsRoom("Village", "The village where you have been living your entire life.");
 	//m_ptrCurrentRoom = &rooms[village];
 
 	rooms[forest_entrance].SetupDetailsRoom("Forest Entrance", "description");
@@ -340,12 +342,12 @@ bool World::HandleUserInputCombat(const std::vector<std::string>& userInput)
 
 	if (m_commands.GO == userCommand)
 	{
-		std::cout << "You can't go anywhere! Your enemy would not let you escape." << std::endl;
+		std::cout << "You can't go anywhere! Your enemy would not let you escape." << std::endl << std::endl;
 
 	}
 	else if (m_commands.LOOK_1 == userCommand || m_commands.LOOK_2 == userCommand)
 	{
-		std::cout << "It's not the time to look around! Your enemy is just in front of you." << std::endl;
+		std::cout << "It's not the time to look around! The enemy is just in front of you." << std::endl << std::endl;
 	}
 	else if (m_commands.INVENTORY_1 == userCommand || m_commands.INVENTORY_2 == userCommand)
 	{

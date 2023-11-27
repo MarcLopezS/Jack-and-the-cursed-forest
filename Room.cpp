@@ -97,6 +97,5 @@ void Room::PrintPropertiesRoom()
 {
 	std::cout << "----------------------------------- " << std::endl
 		<< name << std::endl;
-	std::cout << description << std::endl
-		<< "----------------------------------- " << std::endl;
+	std::cout << "----------------------------------- " << std::endl;
 }

@@ -6,7 +6,6 @@
 
 int main()
 {
-    std::cout << "Hello World!\n";
     World world;
     world.Run();
 }

@@ -51,7 +51,7 @@ void Enemy::Attack(Creature* player)
 	player->current_health_points -= damage_points;
 
 	std::cout << name << " attacked you. You take " << damage_points << " damage points." << std::endl;
-
+	std::cout << std::endl;
 }
 
 void Enemy::Damage(Player* player, int damage_points)

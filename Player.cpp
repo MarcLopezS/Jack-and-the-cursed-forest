@@ -43,6 +43,7 @@ bool Player::Go(const std::string& userInput, Room* current_room)
 
 void Player::Look(Room* currentRoom) const
 {
+	std::cout << currentRoom->description << std::endl << std::endl;
 	if (currentRoom->items_room.size() != 0)
 	{
 		std::cout << "You have found the following objects: " << std::endl;
@@ -57,6 +58,7 @@ void Player::Look(Room* currentRoom) const
 
 	std::cout << std::endl;
 	currentRoom->OutputNeighbors();
+	std::cout << std::endl;
 }
 
 void Player::Take(const std::string& userInput, const std::string& userInput2, Room* currentRoom)
@@ -87,6 +89,7 @@ void Player::Take(const std::string& userInput, const std::string& userInput2, R
 	{
 		std::cout << "There is no items here or not with the specified name! Put a correct item name if exist and try again." << std::endl;
 	}
+	std::cout << std::endl;
 }
 
 void Player::Drop(const std::string& userInput, Room* currentRoom)
@@ -106,6 +109,8 @@ void Player::Drop(const std::string& userInput, Room* currentRoom)
 			
 		}
 	}
+
+	std::cout << std::endl;
 }
 
 void Player::Inventory() const
@@ -116,6 +121,7 @@ void Player::Inventory() const
 	{
 		std::cout << item->name << std::endl;
 	}
+	std::cout << std::endl;
 }
 
 void Player::Equip()
@@ -136,6 +142,8 @@ void Player::Equip()
 
 	if (!itemEquipped)
 		std::cout << "You don't have any weapon to equip..." << std::endl;
+
+	std::cout << std::endl;
 }
 
 void Player::UnEquip()
@@ -150,6 +158,8 @@ void Player::UnEquip()
 	{
 		std::cout << "You already have nothing equipped..." << std::endl;
 	}
+
+	std::cout << std::endl;
 }
 
 void Player::Examine(const std::string& userInput, const std::string& userInput2) const
@@ -177,6 +187,8 @@ void Player::Examine(const std::string& userInput, const std::string& userInput2
 
 	if (!itemExist)
 		std::cout << "The item you want to examine does not exist or is not in your inventory." << std::endl;
+
+	std::cout << std::endl;
 }
 
 void Player::Attack(const std::string& userInput, Enemy* enemy)
@@ -220,6 +232,7 @@ void Player::Use(const std::string& userInput)
 	else {
 		std::cout << "The item you want to use does not exist or is not in your inventory." << std::endl;
 	}
+	std::cout << std::endl;
 }
 
 void Player::Combine()
@@ -296,6 +309,8 @@ void Player::Combine()
 		std::cout << "You cannot combine two equal items! Select two different items and try again." << std::endl;
 
 	}
+
+	std::cout << std::endl;
 }
 
 void Player::Status() const
