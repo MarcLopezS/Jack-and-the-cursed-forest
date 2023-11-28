@@ -3,9 +3,13 @@
 
 #include <iostream>
 #include "World.h"
+#include "Global.h"
+
 
 int main()
 {
+    std::map < std::string, std::string> prueba = textFromFileToMap();
+
     World world;
     world.Run();
 }

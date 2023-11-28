@@ -6,6 +6,7 @@
 #include <vector>
 #include <sstream>
 #include <algorithm>
+#include <map>
 
 #include "Item.h"
 
@@ -15,5 +16,8 @@ std::vector<std::string> tokenize(const std::string& userInput);
 std::string toLowerCase(std::string str);
 std::string toUpperCase(std::string str);
 bool compareNames(Item* item, const std::string& str);
+
+std::map<std::string, std::string> textFromFileToMap();
+std::string breakLine(const std::string& texto);
 
 #endif

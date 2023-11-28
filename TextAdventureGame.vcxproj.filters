@@ -13,6 +13,10 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Text Videogame">
+      <UniqueIdentifier>{67842e3d-4afb-48b2-af6b-acc5a27912fd}</UniqueIdentifier>
+      <Extensions>txt</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -42,6 +46,9 @@
     <ClCompile Include="Combination.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TextsVideogame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="World.h">
@@ -68,5 +75,13 @@
     <ClInclude Include="Combination.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TextsVideogame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Textos Videojuego\textos_videojuego.txt">
+      <Filter>Text Videogame</Filter>
+    </Text>
   </ItemGroup>
 </Project>

@@ -1,0 +1,2 @@
+dialogo_inicio = "Bienvenido al juego!";
+dialogo_despedida = "Aqui se acaba el dialogo";
