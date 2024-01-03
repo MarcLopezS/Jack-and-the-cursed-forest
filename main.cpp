@@ -4,11 +4,13 @@
 #include <iostream>
 #include "World.h"
 #include "Global.h"
+#include "TextsVideogame.h"
 
 
 int main()
 {
-    std::map < std::string, std::string> prueba = textFromFileToMap();
+    TextsVideogame textsvideogame;
+    textsvideogame.introduction();
 
     World world;
     world.Run();

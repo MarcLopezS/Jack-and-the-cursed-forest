@@ -59,14 +59,14 @@ std::map<std::string, std::string> textFromFileToMap()
                 value.erase(value.find_last_not_of(" \t\r\f\v\";") + 1);
                 value = breakLine(value);
                 
-                    textVideogame[key] = value;
+                textVideogame[key] = value;
             }
         }
 
         file.close();
 
         // Ejemplo de uso
-        std::cout << "Inicio del juego: " << textVideogame["dialogo_inicio"] << std::endl;
+        std::cout << "Inicio del juego: " << textVideogame["introduction"] << std::endl;
         std::cout << "Despedida: " << textVideogame["dialogo_despedida"] << std::endl;
     }
     else {

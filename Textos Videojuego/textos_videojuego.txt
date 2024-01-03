@@ -1,2 +1,11 @@
-dialogo_inicio = "Bienvenido al juego!";
-dialogo_despedida = "Aqui se acaba el dialogo";
+introduction = "Once upon a time, in a magical land far, far away, there was a brave adventurer named Jack. He had always dreamed of exploring the mysterious forest that bordered his village, but his parents had warned him against it, saying it was too dangerous.";
+introduction_two = "One day, Jack decided he couldn't resist the call of the forest any longer. He packed a bag with supplies and set off into the woods, determined to discover its secrets.";
+forest = "As he wandered deeper into the forest, he noticed that the trees grew taller and the air became thicker. Suddenly, he heard a rustling in the bushes nearby. He drew his sword, ready for whatever creature might appear.";
+forest_two = "To his surprise, a small fairy emerged from the bushes. The fairy introduced herself as Tia and explained that the forest was under a terrible curse. The trees were dying, and the animals were disappearing.";
+forest_three = "Tia asked Jack for his help in breaking the curse. She told him that he would need to collect three magical gems scattered throughout the forest. Only then could the curse be broken, and the forest be saved.";
+forest_four = "Jack agreed to help and set off on his quest.";
+all_gems = "With all the gems in hand, Tia remind Jack to make their way to the heart of the forest, where the curse was at its strongest.";
+boss = "Together, they used the gems to break the curse. \nBut something doesn't feel right... A strange power is interfiering with the power of the gems...";
+boss_two = "A witch with a crimson gem appears! When Tia recognises that gem, she started to tremble. \nThere is no time to worry about her, because the witch is preparing to attack!!!"; 
+before ending = "When the witch dissapear into nothingness, the crimson gem dropped. Tia explained the reason why she was so afraid when she saw that gem in the first place. \nIt seems that gem was the responsible of the curse! Its creation was unknown but, to lift the curse it is required to destroy it";
+good_ending = "Once the crimson red was destroyed, the forest started to revitalise!\nTia thanked Jack for his bravery and presented him with a magical amulet that would protect him on all his future adventures. \nFrom that day on, Jack was known throughout the land as a hero, and he continued to embark on many more exciting quests.  ";

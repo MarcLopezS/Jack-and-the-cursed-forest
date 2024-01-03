@@ -59,7 +59,6 @@ public:
 	~Item();
 
 	void PrintDetails();
-	void CombineItems(Item combinableItem, const std::string& newName, const std::string& newDescription);
 	int GetValueItem();
 	void ClassifyItemValue();
 	void ClassifyWeaponValue();

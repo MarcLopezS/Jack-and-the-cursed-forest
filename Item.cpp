@@ -23,11 +23,6 @@ void Item::PrintDetails()
 	std::cout << std::endl;
 }
 
-void Item::CombineItems(Item combinableItem, const std::string& newName, const std::string& newDescription)
-{
-
-}
-
 int Item::GetValueItem()
 {
 	return value_item;
