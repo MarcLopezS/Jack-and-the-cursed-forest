@@ -9,8 +9,8 @@
 
 int main()
 {
-    TextsVideogame textsvideogame;
-    textsvideogame.introduction();
+    //TextsVideogame textsvideogame;
+    //textsvideogame.introduction();
 
     World world;
     world.Run();

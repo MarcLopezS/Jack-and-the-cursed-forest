@@ -22,21 +22,16 @@ bool Player::Go(const std::string& userInput, Room* current_room)
 	bool inputExist = false;
 
 	if ((userInput == "north" || userInput == "n") && current_room->ptrNeighbourNorth != nullptr)
-	{
 		inputExist = true;
-	}
+
 	else if ((userInput == "south" || userInput == "s") && current_room->ptrNeighbourSouth != nullptr)
-	{
 		inputExist = true;
-	}
+	
 	else if ((userInput == "east" || userInput == "e") && current_room->ptrNeighbourEast != nullptr)
-	{
 		inputExist = true;
-	}
+	
 	else if ((userInput == "west" || userInput == "w") && current_room->ptrNeighbourWest != nullptr)
-	{
 		inputExist = true;
-	}
 
 	return inputExist;
 }
@@ -75,40 +70,46 @@ void Player::Take(const std::string& userInput, const std::string& userInput2, R
 		if (aux_vector.size() > 1 && userInput2 != "")
 		{
 			if (toLowerCase(aux_vector[0]) == toLowerCase(userInput) && toLowerCase(aux_vector[1]) == toLowerCase(userInput2))
-			{
 				TakeItemToInventory(item_exist,i,currentRoom);
-			}
 
-		}else if (userInput2 == "" && toLowerCase(itemsRoom[i]->name) == toLowerCase(userInput)) {
-
+		}else if (userInput2 == "" && toLowerCase(itemsRoom[i]->name) == toLowerCase(userInput)) 
 			TakeItemToInventory(item_exist, i, currentRoom);
-		}
+		
 	}
 		
 	if(!item_exist)
-	{
 		std::cout << "There is no items here or not with the specified name! Put a correct item name if exist and try again." << std::endl;
-	}
+	
 	std::cout << std::endl;
 }
 
-void Player::Drop(const std::string& userInput, Room* currentRoom)
+void Player::Drop(const std::string& userInput, const std::string& userInput2, Room* currentRoom)
 {
+	bool item_exist = false;
+	std::vector<std::string> aux_vector;
+
 	for (size_t i = 0; i < inventory.size(); i++)
 	{
-		if (toLowerCase(inventory[i]->name) == toLowerCase(userInput))
+		aux_vector = tokenize(inventory[i]->name);
+
+		if (toLowerCase(inventory[i]->name) == toLowerCase(userInput) && userInput2 == "")
 		{
 			if (inventory[i]->itemGameType == ItemType::COMMON)
-			{
-				currentRoom->items_room.push_back(inventory[i]);
-				inventory.erase(inventory.begin() + i);
-			}
-			else {
+				DropItemToRoom(item_exist, i, currentRoom);
+
+			else
 				std::cout << "You cannot drop any weapons or important items! They are so useful for your adventure!" << std::endl;
-			}
 			
 		}
+		else if (aux_vector.size() > 1 && userInput2 != "") {
+			
+			if (toLowerCase(aux_vector[0]) == toLowerCase(userInput) && toLowerCase(aux_vector[1]) == toLowerCase(userInput2))
+				DropItemToRoom(item_exist, i, currentRoom);
+
+		}
 	}
+	if (!item_exist)
+		std::cout << "There is no items with the specified name in your inventory! Put a correct item name if exist and try again." << std::endl;
 
 	std::cout << std::endl;
 }
@@ -210,10 +211,6 @@ void Player::Attack(const std::string& userInput, Enemy* enemy)
 
 }
 
-void Player::Loot(const std::string& userInput)
-{
-}
-
 void Player::Use(const std::string& userInput)
 {
 	auto it = std::find_if(inventory.begin(), inventory.end(), [userInput](Item* item) {
@@ -251,12 +248,9 @@ void Player::Use(const std::string& userInput, Room* currentRoom, bool& activate
 	if ((it != inventory.end() && (*it)->name == "Gaia's sword") || equipedWeapon->name == "Gaia's sword")
 	{
 		if (currentRoom->name == "Forest Great Tree")
-		{
 			activateBoss = true;
-		}
-		else {
+		else 
 			std::cout << "Gaia's sword requires to be used in Forest Great Tree. It is pointless trying to use it here!" << std::endl;
-		}
 	}
 	else {
 		std::cout << "The item you want to use does not exist or is not in your inventory." << std::endl;
@@ -294,7 +288,6 @@ void Player::Combine()
 
 				if (it == combItemsContainer.end())
 					combItemsContainer.push_back(inventory[i]);
-
 			}
 		}
 		
@@ -390,10 +383,34 @@ bool Player::HandleItemInput(const std::string& itemInput)
 	return false;
 }
 
+void Player::DropItemToRoom(bool& item_exist, int posItem, Room* currentRoom)
+{
+	std::cout << "You dropped " << inventory[posItem]->name << " on the floor." << std::endl;
+	currentRoom->items_room.push_back(inventory[posItem]);
+	inventory.erase(inventory.begin() + posItem);
+	item_exist = true;
+}
+
 void Player::TakeItemToInventory(bool& item_exist, int posItem, Room* currentRoom)
 {
 	std::cout << "You take " << currentRoom->items_room[posItem]->name << ". You put the item in your inventory." << std::endl;
 	inventory.push_back(currentRoom->items_room[posItem]);
 	currentRoom->items_room.erase(currentRoom->items_room.begin() + posItem);
 	item_exist = true;
+}
+
+/**
+ * @brief Check if item with specified name is in the inventory
+ * @param nameItem 
+ * @return true/false
+*/
+bool Player::IsItemInInventory(const std::string& nameItem)
+{
+	for (auto item : inventory)
+	{
+		if (item->name == nameItem)
+			return true;
+	}
+
+	return false;
 }

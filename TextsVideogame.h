@@ -11,7 +11,7 @@ class TextsVideogame
 public:
 	TextsVideogame();
 
-	void indexStory();
+	void indexStory(int index);
 
 	void introduction();
 	void forest();
@@ -21,9 +21,10 @@ public:
 	void ending();
 
 	std::map<std::string, std::string> texts_videogame;
+	std::map<std::string, bool> text_status;
 
 private:
-	int index_story;
+	int m_current_index;
 	
 };
 

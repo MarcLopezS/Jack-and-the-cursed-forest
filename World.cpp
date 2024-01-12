@@ -12,6 +12,7 @@ World::World()
 	SetupRooms();
 	SetupItems();
 	SetupEnemies();
+	m_ptrStory = new TextsVideogame();
 
 	m_gameOver = false;
 	m_activateBoss = false;
@@ -22,14 +23,16 @@ World::~World()
 	//m_ptrCurrentRoom pointer is inside m_rooms, so does not require to specify it
 	std::vector<Room*>().swap(m_rooms);//de-allocate the memory taken by the vector 
 	delete player;
+	delete m_ptrStory;
 }
 
 void World::Run()
 {
 	std::vector<std::string> userCommands;
 	std::string input;
-
+	
 	m_ptrCurrentRoom->PrintPropertiesRoom();
+	HandleStoryText();
 
 	while (!m_gameOver)
 	{
@@ -53,6 +56,7 @@ void World::Run()
 		//GameOver();
 		if (!m_gameOver) {
 			m_ptrCurrentRoom->PrintPropertiesRoom();
+			HandleStoryText();
 		}
 		
 	}
@@ -299,7 +303,7 @@ void World::HandleUserInput(const std::vector<std::string>& userInput)
 	}
 	else if (m_commands.DROP_1 == userCommand || m_commands.DROP_2 == userCommand)
 	{
-		player->Drop(userParameter, m_ptrCurrentRoom);
+		player->Drop(userParameter, userParameter2, m_ptrCurrentRoom);
 	}
 	else if (m_commands.INVENTORY_1 == userCommand || m_commands.INVENTORY_2 == userCommand)
 	{
@@ -418,6 +422,46 @@ bool World::HandleUserInputCombat(const std::vector<std::string>& userInput)
 		std::cout << "Invalid or wrong usage command in combat. Please try again." << std::endl;
 
 	return player_turn;
+}
+
+void World::HandleStoryText() 
+{
+	if (m_ptrCurrentRoom == m_rooms[village])
+		m_ptrStory->indexStory(0);
+	else if (m_ptrCurrentRoom == m_rooms[forest_greatTree])
+		m_ptrStory->indexStory(1);
+	else if (HandleStoryAllGemsCondition())
+		m_ptrStory->indexStory(2);
+	else if (m_activateBoss)/*antes de combatir con el boss*/
+		m_ptrStory->indexStory(3);
+	else if (m_ptrCurrentRoom->enemy_room != nullptr && m_ptrCurrentRoom->enemy_room->current_health_points <= 0
+		&& m_ptrCurrentRoom->enemy_room->name == "Infernal Witch")/*despues de matar el boss */
+		m_ptrStory->indexStory(4);
+
+}
+
+bool World::HandleStoryAllGemsCondition()
+{
+	if (player->IsItemInInventory("Earth gem") && player->IsItemInInventory("Life gem") &&
+		player->IsItemInInventory("Water gem"))
+		return true;
+	else if (player->IsItemInInventory("Earth gem") && player->IsItemInInventory("Life gem") &&
+		player->IsItemInInventory("Hydrosword"))
+		return true;
+	else if (player->IsItemInInventory("Earth gem") && player->IsItemInInventory("Vital sword") &&
+		player->IsItemInInventory("Water gem"))
+		return true;
+	else if (player->IsItemInInventory("Geosword") && player->IsItemInInventory("Life gem") &&
+		player->IsItemInInventory("Water gem"))
+		return true;
+	else if (player->IsItemInInventory("Ethereal sword") && player->IsItemInInventory("Water gem"))
+		return true;
+	else if (player->IsItemInInventory("Muddy sword") && player->IsItemInInventory("Life gem"))
+		return true;
+	else if (player->IsItemInInventory("Blessed sword") && player->IsItemInInventory("Earth gem"))
+		return true;
+
+	return false;
 }
 
 void World::HelpCommand() const

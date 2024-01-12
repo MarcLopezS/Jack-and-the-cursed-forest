@@ -18,13 +18,12 @@ public:
 	bool Go(const std::string& userInput, Room* current_room);
 	void Look(Room* currentRoom) const;
 	void Take(const std::string& userInput, const std::string& userInput2, Room* currentRoom);
-	void Drop(const std::string& userInput, Room* currentRoom);
+	void Drop(const std::string& userInput,const std::string& userInput2, Room* currentRoom);
 	void Inventory() const;
 	void Equip();
 	void UnEquip();
 	void Examine(const std::string& userInput, const std::string& userInput2) const;
 	void Attack(const std::string& userInput, Enemy* enemy);
-	void Loot(const std::string& userInput);
 	void Use(const std::string& userInput);
 	void Use(const std::string& userInput, Room* currentRoom, bool& activateBoss);
 	void Combine();
@@ -38,8 +37,11 @@ public:
 	bool HandleItemInput(const std::string& itemInput);
 
 	void TakeItemToInventory(bool& item_exist, int posItem, Room* currentRoom);
+	bool IsItemInInventory(const std::string& name);
+	void DropItemToRoom(bool& item_exist, int posItem, Room* currentRoom);
 
 private:
+
 	const ListItems listItems;
 	int strength;
 

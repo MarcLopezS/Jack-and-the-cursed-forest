@@ -4,15 +4,31 @@
 TextsVideogame::TextsVideogame()
 {
 	texts_videogame = textFromFileToMap();
-	index_story = 0;
+	text_status = copyKeysFromMap(texts_videogame);
+	m_current_index = 0;
 }
 
-void TextsVideogame::indexStory() 
+void TextsVideogame::indexStory(int index) 
 {
-	switch (index_story)
+	m_current_index = index;
+
+	switch (m_current_index)
 	{
 	case 0:
 		introduction();
+		break;
+	case 1:
+		forest();
+		break;
+	case 2:
+		allGems();
+		break;
+	case 3:
+		boss();
+		break;
+	case 4:
+		beforeEnding();
+		ending();
 		break;
 	default:
 		break;
@@ -22,27 +38,44 @@ void TextsVideogame::indexStory()
 
 void TextsVideogame::introduction()
 {
-	std::cout << texts_videogame["introduction"] << std::endl;
-	std::cout << texts_videogame["introduction_two"] << std::endl;
+	if (!text_status["introduction"])
+	{
+		std::cout << texts_videogame["introduction"] << std::endl;
+		std::cout << texts_videogame["introduction_two"] << std::endl;
+		text_status["introduction"] = true;
+	}
 }
 
 void TextsVideogame::forest()
 {
-	std::cout << texts_videogame["forest"] << std::endl;
-	std::cout << texts_videogame["forest_two"] << std::endl;
-	std::cout << texts_videogame["forest_three"] << std::endl;
-	std::cout << texts_videogame["forest_four"] << std::endl;
+	if (!text_status["forest"])
+	{
+		std::cout << texts_videogame["forest"] << std::endl;
+		std::cout << texts_videogame["forest_two"] << std::endl;
+		std::cout << texts_videogame["forest_three"] << std::endl;
+		std::cout << texts_videogame["forest_four"] << std::endl;
+		text_status["forest"] = true;
+	}
+	
 }
 
 void TextsVideogame::allGems()
 {
-	std::cout << texts_videogame["all_gems"] << std::endl;
+	if (!text_status["all_gems"])
+	{
+		std::cout << texts_videogame["all_gems"] << std::endl;
+		text_status["all_gems"] = true;
+	}
 }
 
 void TextsVideogame::boss()
 {
-	std::cout << texts_videogame["boss"] << std::endl;
-	std::cout << texts_videogame["boss_two"] << std::endl;
+	if (!text_status["boss"])
+	{
+		std::cout << texts_videogame["boss"] << std::endl;
+		std::cout << texts_videogame["boss_two"] << std::endl;
+		text_status["boss"] = true;
+	}
 }
 
 void TextsVideogame::beforeEnding()

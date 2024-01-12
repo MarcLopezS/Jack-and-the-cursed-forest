@@ -18,6 +18,7 @@ std::string toUpperCase(std::string str);
 bool compareNames(Item* item, const std::string& str);
 
 std::map<std::string, std::string> textFromFileToMap();
+std::map<std::string, bool> copyKeysFromMap(const std::map<std::string, std::string>& mapWithKeys);
 std::string breakLine(const std::string& texto);
 
 #endif

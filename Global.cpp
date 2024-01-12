@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 #include <map>
+#include <list>
 
 
 std::vector<std::string> tokenize(const std::string& userInput)
@@ -64,16 +65,24 @@ std::map<std::string, std::string> textFromFileToMap()
         }
 
         file.close();
-
-        // Ejemplo de uso
-        std::cout << "Inicio del juego: " << textVideogame["introduction"] << std::endl;
-        std::cout << "Despedida: " << textVideogame["dialogo_despedida"] << std::endl;
     }
     else {
-        std::cerr << "Error al abrir el archivo." << std::endl;
+        std::cerr << "There was an error opening the file." << std::endl;
     }
 
     return textVideogame;
+}
+
+std::map<std::string, bool> copyKeysFromMap(const std::map<std::string, std::string>& mapWithKeys)
+{
+    std::map<std::string, bool> keysList;
+
+    for (const auto& pair : mapWithKeys)
+    {
+        keysList[pair.first] = false;
+    }
+
+    return keysList;
 }
 
 /**

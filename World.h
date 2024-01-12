@@ -6,6 +6,7 @@
 
 #include "Room.h"
 #include "Player.h"
+#include "TextsVideogame.h"
 
 struct actions_command
 {
@@ -51,6 +52,8 @@ public:
 	void Combat();
 	void HandleUserInput(const std::vector<std::string>& userInput);
 	bool HandleUserInputCombat(const std::vector<std::string>& userInput);
+	void HandleStoryText();
+	bool HandleStoryAllGemsCondition();
 	void HelpCommand() const;
 	void HelpCombatCommand() const;
 	void GameOver();
@@ -73,6 +76,7 @@ private:
 	const int m_n_rooms = 16;
 
 	Room* m_ptrCurrentRoom;
+	TextsVideogame* m_ptrStory;
 
 	std::vector<Room*> m_rooms;
 
