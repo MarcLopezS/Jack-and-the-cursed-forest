@@ -222,7 +222,7 @@ void Player::Use(const std::string& userInput)
 		//If using item is successful
 		if (HandleItemInput(userInput))
 		{
-			std::cout << "You used a " << (*it)->name << std::endl;
+			std::cout << "You used " << (*it)->name << std::endl;
 			inventory.erase(it);
 		}
 	}
@@ -368,7 +368,7 @@ bool Player::HandleItemInput(const std::string& itemInput)
 {
 	if (toLowerCase(listItems.POTION) == toLowerCase(itemInput))
 	{
-		if (current_health_points != max_health_points) 
+		if (current_health_points != max_health_points)
 		{
 			current_health_points = (current_health_points + listItems.POTION_VALUE) > max_health_points
 				? max_health_points
@@ -380,6 +380,9 @@ bool Player::HandleItemInput(const std::string& itemInput)
 			std::cout << "I'm completely healthy! It would be a waste to use a " << listItems.POTION << " now." << std::endl;
 		}
 	}
+	else if (toLowerCase(listItems.MINE_KEY) == toLowerCase(itemInput))
+		return true;
+
 	return false;
 }
 
@@ -389,6 +392,11 @@ void Player::DropItemToRoom(bool& item_exist, int posItem, Room* currentRoom)
 	currentRoom->items_room.push_back(inventory[posItem]);
 	inventory.erase(inventory.begin() + posItem);
 	item_exist = true;
+}
+
+void Player::PutItemToInventory(Item* item)
+{
+	inventory.push_back(item);
 }
 
 void Player::TakeItemToInventory(bool& item_exist, int posItem, Room* currentRoom)
@@ -414,3 +422,4 @@ bool Player::IsItemInInventory(const std::string& nameItem)
 
 	return false;
 }
+

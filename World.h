@@ -72,6 +72,8 @@ private:
 	void SetupBoss();
 	void RemoveBoss();
 	void ReturnRoomCheckpoint();
+	void UseCommandController(const std::string& userParameter, const std::string& userParameter2);
+	void UnlockEarthAltar();
 
 	const int m_n_rooms = 16;
 
@@ -84,6 +86,7 @@ private:
 
 	bool m_gameOver;
 	bool m_activateBoss;
+	bool m_earthAltarUnlock;
 
 
 };

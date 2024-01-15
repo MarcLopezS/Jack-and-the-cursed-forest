@@ -1,9 +1,2 @@
-﻿  Enemy.cpp
-  Player.cpp
-C:\Users\GAMER\Desktop\Text game adventure\Jack-and-the-cursed-forest\Player.cpp(108,46): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\GAMER\Desktop\Text game adventure\Jack-and-the-cursed-forest\Player.cpp(119,46): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-  Room.cpp
-  World.cpp
-  main.cpp
-  Generating Code...
+﻿  World.cpp
   TextAdventureGame.vcxproj -> C:\Users\GAMER\Desktop\Text game adventure\Jack-and-the-cursed-forest\x64\Debug\TextAdventureGame.exe

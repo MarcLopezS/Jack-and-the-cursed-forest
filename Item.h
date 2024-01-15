@@ -17,6 +17,8 @@ struct ListItems
 		std::string LIFE_GEM = "Life gem"; 
 		std::string EARTH_GEM = "Earth gem";
 
+		std::string MINE_KEY = "Mine key";
+
 		std::string POTION = "Potion";
 		
 		int POTION_VALUE = 75;

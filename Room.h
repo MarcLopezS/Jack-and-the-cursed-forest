@@ -33,8 +33,6 @@ enum locations
 
 };
 
-
-
 class Room
 {
 public:
@@ -48,11 +46,12 @@ public:
 	void SetupItem(Item* item);
 	void SetupItem(std::vector<Item> items);
 	void SetNeighbors(Room* neighborNorth, Room* neighborSouth, Room* neighborEast, Room* neighborWest);
+	void SetNeighbor(Room* neighbor, const std::string& dir);
 	void OutputNeighbors();
 
 	bool checkDirection(const std::string& direction);
 	void PrintPropertiesRoom();
-
+	
 
 	std::string name;
 	std::string description;
@@ -65,10 +64,6 @@ public:
 
 	Enemy* enemy_room;
 
-
 };
-
-
-
 
 #endif // Room_h_

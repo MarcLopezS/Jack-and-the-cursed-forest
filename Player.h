@@ -39,6 +39,8 @@ public:
 	void TakeItemToInventory(bool& item_exist, int posItem, Room* currentRoom);
 	bool IsItemInInventory(const std::string& name);
 	void DropItemToRoom(bool& item_exist, int posItem, Room* currentRoom);
+	
+	void PutItemToInventory(Item* item);
 
 private:
 

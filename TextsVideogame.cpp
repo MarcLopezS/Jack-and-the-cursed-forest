@@ -21,12 +21,15 @@ void TextsVideogame::indexStory(int index)
 		forest();
 		break;
 	case 2:
-		allGems();
+		mine();
 		break;
 	case 3:
-		boss();
+		allGems();
 		break;
 	case 4:
+		boss();
+		break;
+	case 5:
 		beforeEnding();
 		ending();
 		break;
@@ -57,6 +60,16 @@ void TextsVideogame::forest()
 		text_status["forest"] = true;
 	}
 	
+}
+
+void TextsVideogame::mine()
+{
+	if (!text_status["mine"])
+	{
+		std::cout << texts_videogame["mine"] << std::endl;
+
+		text_status["mine"] = true;
+	}
 }
 
 void TextsVideogame::allGems()

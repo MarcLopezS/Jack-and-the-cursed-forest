@@ -68,6 +68,14 @@ void Room::SetNeighbors(Room* ptrNorth, Room* ptrSouth, Room* ptrEast, Room* ptr
 	ptrNeighbourWest = ptrWest;
 }
 
+void Room::SetNeighbor(Room* neighbor, const std::string& dir)
+{
+	if(dir == "N") ptrNeighbourNorth = neighbor;
+	else if (dir == "S") ptrNeighbourSouth = neighbor;
+	else if (dir == "E") ptrNeighbourEast = neighbor;
+	else if (dir == "W") ptrNeighbourWest = neighbor;
+}
+
 void Room::OutputNeighbors()
 {
 	std::cout << "You see that you can go in the following directions: ";

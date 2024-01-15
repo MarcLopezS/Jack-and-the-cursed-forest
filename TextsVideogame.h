@@ -15,6 +15,7 @@ public:
 
 	void introduction();
 	void forest();
+	void mine();
 	void allGems();
 	void boss();
 	void beforeEnding();
