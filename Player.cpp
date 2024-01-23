@@ -278,17 +278,7 @@ void Player::Combine()
 		{
 			if ( ((toLowerCase(inventory[i]->name) == toLowerCase(input1)) && inventory[i]->isCombinable) ||
 				((toLowerCase(inventory[i]->name) == toLowerCase(input2)) && inventory[i]->isCombinable))
-			{
-				nameAux = inventory[i]->name;
-				//Check if item exist inside vector combItemsContainer to avoid duplicates
-				auto it = std::find_if(combItemsContainer.begin(), combItemsContainer.end(),
-					[&](const Item* item) {
-						return item != nullptr && item->name == nameAux;
-					});
-
-				if (it == combItemsContainer.end())
 					combItemsContainer.push_back(inventory[i]);
-			}
 		}
 		
 		if (combItemsContainer.size() == 2)
@@ -302,7 +292,14 @@ void Player::Combine()
 				std::cout << "Combination successful! You obtain " << resultCombination->name  << "!" << std::endl;
 				std::cout << "You put " << resultCombination->name << " in your inventory." << std::endl << std::endl;
 
-				auto itItem1 = std::find_if(inventory.begin(), inventory.end(), [input1](Item* item) {
+				for (auto it = inventory.begin(); it != inventory.end();) {
+					if (compareNames(*it, input1) || compareNames(*it, input2)) 
+						it = inventory.erase(it);
+					else 
+						++it;
+				}
+
+				/*auto itItem1 = std::find_if(inventory.begin(), inventory.end(), [input1](Item* item) {
 					return compareNames(item, input1);
 					});
 
@@ -314,7 +311,7 @@ void Player::Combine()
 					});
 
 				if (itItem2 != inventory.end())
-					inventory.erase(itItem2);
+					inventory.erase(itItem2);*/
 			}
 			else {
 				std::cout << "You cannot combine those items. Select two different ones and try again." << std::endl;

@@ -6,7 +6,7 @@ Item::Item(const std::string& name, const std::string& description, ItemType ite
 	this->name = name;
 	this->description = description;
 	itemGameType = itemType;
-	this->isCombinable = isCombinable;
+	this->isCombinable = combinable;
 	ClassifyItemValue();
 }
 
