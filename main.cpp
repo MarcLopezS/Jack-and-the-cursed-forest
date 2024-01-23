@@ -3,10 +3,15 @@
 
 #include <iostream>
 #include "World.h"
+#include "Global.h"
+#include "TextsVideogame.h"
+
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    //TextsVideogame textsvideogame;
+    //textsvideogame.introduction();
+
     World world;
     world.Run();
 }

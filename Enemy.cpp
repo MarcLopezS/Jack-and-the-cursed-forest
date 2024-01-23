@@ -51,7 +51,7 @@ void Enemy::Attack(Creature* player)
 	player->current_health_points -= damage_points;
 
 	std::cout << name << " attacked you. You take " << damage_points << " damage points." << std::endl;
-
+	std::cout << std::endl;
 }
 
 void Enemy::Damage(Player* player, int damage_points)
@@ -76,13 +76,13 @@ void Enemy::Defeat(Player* player)
 	//Boss 100% drop prob. Common enemy 15%
 	int drop_probability = creature_type == CreatureType::ENEMY ? 15 : 100;
 
-	int random_number = rand() % 100 + 1;
+	int control_probability = rand() % 100 + 1;
 		
-	if (random_number <= drop_probability)
+	if (control_probability <= drop_probability)
 	{
 		std::cout << name << " dropped a " << drop_item->name  << "." << std::endl;
 		//inventory.push_back(currentRoom->items_room[i]);
-		player->GetInventory().push_back(drop_item);
+		player->LootEnemy(drop_item);
 		drop_item = nullptr;
 	}
 	

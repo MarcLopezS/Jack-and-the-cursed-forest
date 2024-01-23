@@ -6,14 +6,15 @@
 
 #include "Room.h"
 #include "Player.h"
+#include "TextsVideogame.h"
 
 struct actions_command
 {
 	std::string LOOK_1 = "look";
 	std::string LOOK_2 = "l";
 	std::string GO = "go";
-	std::string TAKE_1= "take";
-	std::string TAKE_2= "pick";
+	std::string TAKE_1 = "take";
+	std::string TAKE_2 = "pick";
 	std::string DROP_1 = "drop";
 	std::string DROP_2 = "put";
 	std::string EQUIP_1 = "equip";
@@ -36,6 +37,8 @@ struct actions_command
 	std::string QUIT_2 = "q";
 	std::string USE_1 = "use";
 	std::string USE_2 = "u";
+	std::string COMBINE_1 = "combine";
+	std::string COMBINE_2 = "c";
 
 };
 
@@ -46,30 +49,45 @@ public:
 	~World();
 
 	void Run();
+	void Combat();
 	void HandleUserInput(const std::vector<std::string>& userInput);
+	bool HandleUserInputCombat(const std::vector<std::string>& userInput);
+	void HandleStoryText();
+	bool HandleStoryAllGemsCondition();
 	void HelpCommand() const;
+	void HelpCombatCommand() const;
 	void GameOver();
 	void GoDestination(const std::string& direction);
+	void PrintCombatStats();
 
 	Player* player;
+	ListItems listItems;
 
 private:
 
 	void SetupRooms();
 	void SetupNeighbors(Room* rooms);
 	void SetupItems();
-	
-	const int m_n_rooms = 16;
-	
-	Room* m_ptrCurrentRoom;
-	
-	std::vector<Room*> m_rooms;
-	
-	const actions_command m_commands;
-	
-	bool m_gameOver;
+	void SetupEnemies();
+	void SetupBoss();
+	void RemoveBoss();
+	void ReturnRoomCheckpoint();
+	void UseCommandController(const std::string& userParameter, const std::string& userParameter2);
+	void UnlockEarthAltar();
 
-	
+	const int m_n_rooms = 16;
+
+	Room* m_ptrCurrentRoom;
+	TextsVideogame* m_ptrStory;
+
+	std::vector<Room*> m_rooms;
+
+	const actions_command m_commands;
+
+	bool m_gameOver;
+	bool m_activateBoss;
+	bool m_earthAltarUnlock;
+
 
 };
 

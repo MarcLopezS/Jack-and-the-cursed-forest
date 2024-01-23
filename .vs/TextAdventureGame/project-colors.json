@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "2ac7ece2-e643-42a5-a282-cfb61e1a7c44": {
+      "ProjectGuid": "2ac7ece2-e643-42a5-a282-cfb61e1a7c44",
+      "DisplayName": "TextAdventureGame",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}

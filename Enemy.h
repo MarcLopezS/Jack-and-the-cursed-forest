@@ -3,6 +3,7 @@
 
 #include "Item.h"
 #include "Player.h"
+class Player;
 
 class Enemy : public Creature
 {
