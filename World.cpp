@@ -463,8 +463,6 @@ void World::HelpCommand() const
 		<< "\t Command whose usage is to equip the item you specify (only specific items can be equiped)." << std::endl;
 	std::cout << toUpperCase(m_commands.UNEQUIP_1) << " / " << toUpperCase(m_commands.UNEQUIP_2)
 		<< "\t Command whose usage is to unequip the item you specify (only if you have it equiped)." << std::endl;
-	std::cout << toUpperCase(m_commands.LOOT_1) << " / " << toUpperCase(m_commands.LOOT_2)
-		<< "\t Command whose usage is to put all the items into your inventory." << std::endl;
 	std::cout << toUpperCase(m_commands.INVENTORY_1) << " / " << toUpperCase(m_commands.INVENTORY_2)
 		<< "\t Command whose usage is to show all items inside the inventory." << std::endl;
 	std::cout << toUpperCase(m_commands.COMBINE_1) << " / " << toUpperCase(m_commands.COMBINE_2)
